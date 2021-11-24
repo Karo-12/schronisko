@@ -9,13 +9,34 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand">Schronisko"Futrzak"</a>
-    <li class="nav-item active">
-        <a class="nav-link" th:href="@{/}">Strona główna</a>
-        <a class="nav-link" th:href="@{/animals}">Przęglądaj zwierzęta</a>
-    </li>
-</nav>
+<div>
+    <br>
+    <br>
+</div>
+<div>
+    <table class = "table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Race</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="animal : ${listAnimals}">
+            <tr>
+                <td>[[${animal.id.idAnimal}]]</td>
+                <td>[[${animal.name}]]</td>
+                <td>[[${animal.idRace.idType.type}]]</td>
+                <td>[[${animal.idRace.race}]]</td>
+                <td></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
 
+</div>
 </body>
 </html>
