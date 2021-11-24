@@ -19,4 +19,5 @@ public class Type {
 
     @Column(name = "Type", nullable = false, length = 45)
     private String type;
+
 }

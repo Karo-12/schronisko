@@ -34,5 +34,5 @@ public class Adoption {
 
     @Column(name = "birthday")
     private Instant birthday;
-
+    
 }

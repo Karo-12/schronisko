@@ -13,12 +13,14 @@ import java.util.Objects;
 @Embeddable
 @Getter
 @Setter
+
 public class RaceId implements Serializable {
     private static final long serialVersionUID = -4073786171537406189L;
     @Column(name = "idRace", nullable = false)
     private Integer idRace;
     @Column(name = "idType", nullable = false)
     private Integer idType;
+
 
     @Override
     public int hashCode() {

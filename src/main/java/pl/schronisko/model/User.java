@@ -1,6 +1,5 @@
 package pl.schronisko.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,4 +38,5 @@ public class User {
 
     @Column(name = "permission", nullable = false)
     private Integer permission;
+
 }

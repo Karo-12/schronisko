@@ -13,6 +13,7 @@ import java.util.Objects;
 @Embeddable
 @Getter
 @Setter
+
 public class ReservationId implements Serializable {
     private static final long serialVersionUID = 8074287598248313668L;
     @Column(name = "idReservation", nullable = false)
@@ -21,10 +22,6 @@ public class ReservationId implements Serializable {
     private Integer idUser;
     @Column(name = "idAnimal", nullable = false)
     private Integer idAnimal;
-
-    public Integer getIdAnimal() {
-        return idAnimal;
-    }
 
     @Override
     public int hashCode() {

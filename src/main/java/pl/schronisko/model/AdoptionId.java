@@ -22,7 +22,6 @@ public class AdoptionId implements Serializable {
     @Column(name = "idUser", nullable = false)
     private Integer idUser;
 
-
     @Override
     public int hashCode() {
         return Objects.hash(idUser, idAnimal, idAdoption);

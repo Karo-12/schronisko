@@ -13,6 +13,7 @@ import java.util.Objects;
 @Embeddable
 @Getter
 @Setter
+
 public class AnimalId implements Serializable {
     private static final long serialVersionUID = -3439671743016515633L;
     @Column(name = "idAnimal", nullable = false)
