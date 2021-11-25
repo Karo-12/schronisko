@@ -19,7 +19,13 @@ public class AnimalId implements Serializable {
     private Integer idAnimal;
     @Column(name = "idUser", nullable = false)
     private Integer idUser;
+    public AnimalId() {
 
+    }
+    public AnimalId(Integer idAnimal, Integer idUser) {
+        this.idAnimal = idAnimal;
+        this.idUser = idUser;
+    }
 
     @Override
     public int hashCode() {
