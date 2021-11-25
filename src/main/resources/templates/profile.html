@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Schronisko Futrzak | Przeglądaj zwierzęta</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div>
+    <br>
+    <br>
+</div>
+<div>
+    <table class = "table table-bordered">
+        <thead class="table-dark">
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Race</th>
+        <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>[[${animalProfile.id.idAnimal}]]</td>
+                <td>[[${animalProfile.name}]]</td>
+                <td>[[${animalProfile.idType.type}]]</td>
+                <td>[[${animalProfile.idType.idRace.race}]]</td>
+                <td>[[${animalProfile.status}]]</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
