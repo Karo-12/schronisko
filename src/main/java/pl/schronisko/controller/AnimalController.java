@@ -15,6 +15,7 @@ public class AnimalController {
     @Autowired
     private AnimalService service;
 
+
     @GetMapping("/animals")
     public String showAnimalList(Model model){
         List<Animal> animals = service.listAll();
