@@ -2,12 +2,11 @@ package pl.schronisko.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Table(name = "user")
 @Entity
@@ -15,7 +14,8 @@ import java.time.Instant;
 @Setter
 public class User {
     @Id
-    @Column(name = "idUser", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user", nullable = false)
     private Integer id;
 
     @Column(name = "name", nullable = false, length = 15)
@@ -33,10 +33,12 @@ public class User {
     @Column(name = "address", nullable = false, length = 45)
     private String address;
 
-    @Column(name = "birthday", nullable = false)
-    private Instant birthday;
-
     @Column(name = "permission", nullable = false)
     private Integer permission;
+
+    @Column(name = "birthday", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
+
 
 }

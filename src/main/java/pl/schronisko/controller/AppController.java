@@ -1,4 +1,4 @@
-package pl.schronisko;
+package pl.schronisko.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
