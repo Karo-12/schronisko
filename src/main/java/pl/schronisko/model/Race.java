@@ -14,10 +14,12 @@ import javax.persistence.Table;
 @Setter
 public class Race {
     @Id
-    @Column(name = "idRace", nullable = false)
+    @Column(name = "id_race", nullable = false)
     private Integer id;
 
     @Column(name = "Race", nullable = false, length = 45)
     private String race;
+
+
 
 }
