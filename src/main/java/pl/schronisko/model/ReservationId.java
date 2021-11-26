@@ -13,15 +13,14 @@ import java.util.Objects;
 @Embeddable
 @Getter
 @Setter
-
 public class ReservationId implements Serializable {
     private static final long serialVersionUID = 8074287598248313668L;
-    @Column(name = "idReservation", nullable = false)
-    private Integer idReservation;
-    @Column(name = "idUser", nullable = false)
-    private Integer idUser;
-    @Column(name = "idAnimal", nullable = false)
+    @Column(name = "id_animal", nullable = false)
     private Integer idAnimal;
+    @Column(name = "id_reservation", nullable = false)
+    private Integer idReservation;
+    @Column(name = "id_user", nullable = false)
+    private Integer idUser;
 
     @Override
     public int hashCode() {

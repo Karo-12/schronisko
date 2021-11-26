@@ -7,16 +7,21 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Table(name = "reservation", indexes = {
-        @Index(name = "fk_Reservation_User1_idx", columnList = "idUser"),
-        @Index(name = "fk_Reservation_Animal1_idx", columnList = "idAnimal")
+        @Index(name = "fk_Reservation_User1_idx", columnList = "id_user"),
+        @Index(name = "fk_Reservation_Animal1_idx", columnList = "id_animal")
 })
 @Entity
 @Getter
 @Setter
-
 public class Reservation {
     @EmbeddedId
     private ReservationId id;
+
+    @Column(name = "address", length = 45)
+    private String address;
+
+    @Column(name = "birthday")
+    private Instant birthday;
 
     @Column(name = "date", nullable = false)
     private Instant date;
@@ -29,11 +34,5 @@ public class Reservation {
 
     @Column(name = "surname", length = 45)
     private String surname;
-
-    @Column(name = "address", length = 45)
-    private String address;
-
-    @Column(name = "birthday")
-    private Instant birthday;
 
 }

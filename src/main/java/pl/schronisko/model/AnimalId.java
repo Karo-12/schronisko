@@ -14,14 +14,14 @@ import java.util.Objects;
 @Getter
 @Setter
 public class AnimalId implements Serializable {
-    private static final long serialVersionUID = -3439671743016515633L;
-    @Column(name = "idAnimal", nullable = false)
-    private Integer idAnimal;
-    @Column(name = "idUser", nullable = false)
-    private Integer idUser;
-    public AnimalId() {
 
-    }
+    private static final long serialVersionUID = -3439671743016515633L;
+    @Column(name = "id_animal", nullable = false)
+    private Integer idAnimal;
+    @Column(name = "id_user", nullable = false)
+    private Integer idUser;
+
+    public AnimalId() {}
     public AnimalId(Integer idAnimal, Integer idUser) {
         this.idAnimal = idAnimal;
         this.idUser = idUser;

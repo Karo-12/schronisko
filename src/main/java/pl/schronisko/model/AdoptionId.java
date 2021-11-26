@@ -9,18 +9,17 @@ import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 @Embeddable
 @Getter
 @Setter
 public class AdoptionId implements Serializable {
     private static final long serialVersionUID = 3677980064287523973L;
-    @Column(name = "idAdoption", nullable = false)
+    @Column(name = "id_adoption", nullable = false)
     private Integer idAdoption;
-    @Column(name = "idAnimal", nullable = false)
+    @Column(name = "id_animal", nullable = false)
     private Integer idAnimal;
-    @Column(name = "idUser", nullable = false)
+    @Column(name = "id_user", nullable = false)
     private Integer idUser;
 
     @Override
