@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Schronisko Futrzak | Przeglądaj użytkowników</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div>
+    <br>
+    <br>
+</div>
+<div>
+    <table class = "table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Password</th>
+            <th>E-mail</th>
+            <th>Address</th>
+            <th>Birthday</th>
+            <th>Permission</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="user : ${listOfUsers}">
+            <tr>
+               <td>[[${user.getId()}]]</td>
+                <td>[[${user.name}]]</td>
+                <td>[[${user.surname}]]</td>
+                <td>[[${user.password}]]</td>
+                <td>[[${user.email}]]</td>
+                <td>[[${user.address}]]</td>
+                <td>[[${user.birthday}]]</td>
+                <td>[[${user.permission}]]</td>
+                <td></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
