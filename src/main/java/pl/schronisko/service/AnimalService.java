@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.model.Animal;
-import pl.schronisko.model.AnimalId;
 import pl.schronisko.repository.AnimalRepository;
 
 import java.util.List;
@@ -20,10 +19,13 @@ public class AnimalService {
         return (List<Animal>) animalRepository.findAll();
     }
 
-    public Animal getAnimalById (AnimalId id) throws AnimalNotFoundException {
+    public Animal getAnimalById (Integer id) throws AnimalNotFoundException {
         Optional<Animal> result = animalRepository.findById(id);
         if (result.isPresent()) return result.get();
-        else throw new AnimalNotFoundException("Could not find Animal with id "+ id.getIdAnimal());
+        else throw new AnimalNotFoundException("Could not find Animal with id "+ id);
+    }
+     public void save(Animal animal) {
+        animalRepository.save(animal);
     }
 
 }

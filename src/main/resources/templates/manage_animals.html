@@ -32,13 +32,16 @@
                 <td>[[${animal.idRace.idType.type}]]</td>
                 <td>[[${animal.idRace.race}]]</td>
                 <td>
-                    <a class="h4 m-3" th:href="@{'/profile/'+${animal.id}}">Profile</a>
+                    <a class="h4 m-3" th:href="@{'/users/edit/'+${animal.id}}">Edit</a>
+                    <a class="h4" th:href="@{'/users/delete/'+${animal.id}}">Delete</a>
                 </td>
             </tr>
         </th:block>
         </tbody>
     </table>
-
+    <div class="m-2">
+        <a class="h3" th:href="@{/manage_animals/new}">Add new Animal</a>
+    </div>
 </div>
 </body>
 </html>

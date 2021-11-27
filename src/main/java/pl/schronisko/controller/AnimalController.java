@@ -5,11 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.schronisko.exception.AnimalNotFoundException;
+import pl.schronisko.exception.RaceNotFoundException;
+import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.Animal;
-import pl.schronisko.model.AnimalId;
+import pl.schronisko.model.Race;
+import pl.schronisko.model.Type;
+import pl.schronisko.model.User;
 import pl.schronisko.service.AnimalService;
+import pl.schronisko.service.RaceService;
+import pl.schronisko.service.TypeService;
+import pl.schronisko.service.UserService;
 
 import java.util.List;
 
@@ -18,6 +26,12 @@ public class AnimalController {
 
     @Autowired
     private AnimalService animalService;
+    @Autowired
+    private RaceService raceService;
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/animals")
@@ -26,10 +40,10 @@ public class AnimalController {
         model.addAttribute("listAnimals", animals);
         return "animals";
     }
-    @GetMapping("/profile/{idAnimal}/{idUser}")
-    public String showAnimalProfile(@PathVariable Integer idAnimal, @PathVariable Integer idUser, Model model, RedirectAttributes ra) {
+    @GetMapping("/profile/{id}")
+    public String showAnimalProfile(@PathVariable String id, Model model, RedirectAttributes ra) {
         try {
-            Animal animal = animalService.getAnimalById(new AnimalId(idAnimal,idUser));
+            Animal animal = animalService.getAnimalById(Integer.parseInt(id));
             model.addAttribute("animalProfile", animal);
             return "profile";
 
@@ -37,5 +51,26 @@ public class AnimalController {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/animals";
         }
+    }
+    @GetMapping("/manage_animals")
+    public String showAnimalsListManage(Model model) {
+        List<Animal> animals = animalService.listAll();
+        model.addAttribute("listAnimals", animals);
+        return "manage_animals";
+    }
+    @GetMapping("manage_animals/new")
+    public String addNewUser(Model model) {
+        List <Race> races = raceService.listAll();
+        List <User> users = userService.listAll();
+        model.addAttribute("animal", new Animal());
+        model.addAttribute("races", races);
+        model.addAttribute("users", users);
+        return "new_animal_form";
+    }
+    @PostMapping("/manage_animals/save")
+    public String saveAnimal(Animal animal, RedirectAttributes ra) {
+        animalService.save(animal);
+        ra.addFlashAttribute("message","The user has been saved successfully");
+        return "redirect:/manage_animals";
     }
 }

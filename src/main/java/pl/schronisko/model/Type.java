@@ -11,15 +11,11 @@ import javax.persistence.*;
 @Setter
 public class Type {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idType", nullable = false)
     private Integer id;
 
     @Column(name = "Type", nullable = false, length = 45)
     private String type;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idRace", nullable = false)
-    private Race idRace;
-
 
 }
