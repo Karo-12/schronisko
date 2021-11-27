@@ -73,4 +73,30 @@ public class AnimalController {
         ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/manage_animals";
     }
+    @GetMapping("/manage_animals/edit/{id}")
+    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+        try {
+            Animal animal = animalService.getAnimalById(id);
+            List <Race> races = raceService.listAll();
+            List <User> users = userService.listAll();
+            model.addAttribute("animal", animal);
+            model.addAttribute("races", races);
+            model.addAttribute("users", users);
+            return "new_animal_form";
+        } catch (AnimalNotFoundException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/users";
+        }
+    }
+    @GetMapping("/manage_animals/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra) {
+        try {
+            animalService.delete(id);
+            ra.addFlashAttribute("message", " The user ID: "+id+" has been deleted.");
+        } catch (UserNotFoundException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+        }
+        return "redirect:/manage_animals";
+    }
+
 }

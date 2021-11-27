@@ -32,8 +32,8 @@
                 <td>[[${animal.idRace.idType.type}]]</td>
                 <td>[[${animal.idRace.race}]]</td>
                 <td>
-                    <a class="h4 m-3" th:href="@{'/users/edit/'+${animal.id}}">Edit</a>
-                    <a class="h4" th:href="@{'/users/delete/'+${animal.id}}">Delete</a>
+                    <a class="h4 m-3" th:href="@{'/manage_animals/edit/'+${animal.id}}">Edit</a>
+                    <a class="h4" th:href="@{'/manage_animals/delete/'+${animal.id}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -41,6 +41,7 @@
     </table>
     <div class="m-2">
         <a class="h3" th:href="@{/manage_animals/new}">Add new Animal</a>
+        <a class="h3" th:href="@{/manage_animals/new_type}">Add new Type</a>
     </div>
 </div>
 </body>

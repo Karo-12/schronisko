@@ -3,6 +3,7 @@ package pl.schronisko.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.schronisko.exception.AnimalNotFoundException;
+import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.Animal;
 import pl.schronisko.repository.AnimalRepository;
 
@@ -26,6 +27,13 @@ public class AnimalService {
     }
      public void save(Animal animal) {
         animalRepository.save(animal);
+    }
+    public void delete(Integer id) throws UserNotFoundException {
+        Long count = animalRepository.countById(id);
+        if(count == null || count == 0) {
+            throw new UserNotFoundException("Could not find any user with ID: "+id);
+        }
+        animalRepository.deleteById(id);
     }
 
 }

@@ -31,9 +31,7 @@
                 <td>[[${animal.name}]]</td>
                 <td>[[${animal.idRace.idType.type}]]</td>
                 <td>[[${animal.idRace.race}]]</td>
-                <td>
-                    <a class="h4 m-3" th:href="@{'/profile/'+${animal.id}}">Profile</a>
-                </td>
+                <td><a class="h4 m-3" th:href="@{'/profile/'+${animal.id}}">Profile</a></td>
             </tr>
         </th:block>
         </tbody>

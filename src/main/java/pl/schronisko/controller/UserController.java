@@ -14,7 +14,7 @@ import pl.schronisko.service.UserService;
 import java.util.List;
 
 @Controller
-public class ManageUsersController {
+public class UserController {
     @Autowired
     UserService userService;
 

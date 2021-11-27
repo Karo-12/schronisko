@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface AnimalRepository extends CrudRepository<Animal, Integer> {
     Optional<Animal> findById(Integer id);
-
-
+    Long countById(Integer id);
 }
