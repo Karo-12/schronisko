@@ -1,5 +1,6 @@
 package pl.schronisko.controller;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,6 +56,18 @@ public class UserController {
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
+        return "redirect:/users";
+    }
+    @GetMapping("users/register")
+    public String registerUser(Model model) {
+        model.addAttribute("user", new User());
+        return "registration_form";
+    }
+    @PostMapping("/users/save_register")
+    public String registerUserSave(User user, RedirectAttributes ra){
+        user.setPermission(1);
+        userService.save(user);
+        ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/users";
     }
 
