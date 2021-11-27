@@ -16,6 +16,6 @@ public class Type {
     private Integer id;
 
     @Column(name = "Type", nullable = false, length = 45)
-    private String type;
+    private String name;
 
 }

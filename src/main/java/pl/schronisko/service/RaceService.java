@@ -6,6 +6,7 @@ import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.RaceNotFoundException;
 import pl.schronisko.model.Animal;
 import pl.schronisko.model.Race;
+import pl.schronisko.model.Type;
 import pl.schronisko.repository.RaceRepository;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public class RaceService {
         Optional<Race> result = raceRepository.findById(id);
         if (result.isPresent()) return result.get();
         else throw new RaceNotFoundException("Could not find Animal with id "+ id);
+    }
+    public void save(Race race) { raceRepository.save(race);
     }
 
 }

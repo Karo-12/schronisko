@@ -22,7 +22,7 @@ public class TypeController {
     @PostMapping("/manage_animals/save_type")
     public String saveType(Type type, RedirectAttributes ra) {
         typeService.save(type);
-        ra.addFlashAttribute("message","Typ zwierzecia zostal dodany prawidlowo");
+        ra.addFlashAttribute("message", "Typ zwierzecia zostal dodany prawidlowo");
         return "redirect:/manage_animals";
     }
 }

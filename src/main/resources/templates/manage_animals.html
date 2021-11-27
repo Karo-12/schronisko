@@ -21,6 +21,7 @@
             <th>Name</th>
             <th>Type</th>
             <th>Race</th>
+            <th>Opiekun</th>
             <th></th>
         </tr>
         </thead>
@@ -29,8 +30,9 @@
             <tr>
                 <td>[[${animal.id}]]</td>
                 <td>[[${animal.name}]]</td>
-                <td>[[${animal.idRace.idType.type}]]</td>
-                <td>[[${animal.idRace.race}]]</td>
+                <td>[[${animal.idRace.idType.name}]]</td>
+                <td>[[${animal.idRace.name}]]</td>
+                <td>[[${animal.idUser.email}]]</td>
                 <td>
                     <a class="h4 m-3" th:href="@{'/manage_animals/edit/'+${animal.id}}">Edit</a>
                     <a class="h4" th:href="@{'/manage_animals/delete/'+${animal.id}}">Delete</a>
@@ -42,6 +44,7 @@
     <div class="m-2">
         <a class="h3" th:href="@{/manage_animals/new}">Add new Animal</a>
         <a class="h3" th:href="@{/manage_animals/new_type}">Add new Type</a>
+        <a class="h3" th:href="@{/manage_animals/new_race}">Add new Race</a>
     </div>
 </div>
 </body>

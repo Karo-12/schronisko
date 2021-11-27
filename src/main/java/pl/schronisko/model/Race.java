@@ -18,7 +18,7 @@ public class Race {
     private Integer id;
 
     @Column(name = "Race", nullable = false, length = 45)
-    private String race;
+    private String name;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "idType", nullable = false)
