@@ -1,2 +1,2 @@
 # schronisko
-app for computer science thesis
+App for managing adoptions in animal shelter
