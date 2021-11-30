@@ -59,7 +59,7 @@ public class AnimalController {
     @GetMapping("manage_animals/new")
     public String addNewUser(Model model) {
         List <Race> races = raceService.listAll();
-        List <User> users = userService.listAll();
+        List <User> users = userService.listEmployees();
         model.addAttribute("animal", new Animal());
         model.addAttribute("races", races);
         model.addAttribute("users", users);
@@ -76,7 +76,7 @@ public class AnimalController {
         try {
             Animal animal = animalService.getAnimalById(id);
             List <Race> races = raceService.listAll();
-            List <User> users = userService.listAll();
+            List <User> users = userService.listEmployees();
             model.addAttribute("animal", animal);
             model.addAttribute("races", races);
             model.addAttribute("users", users);
