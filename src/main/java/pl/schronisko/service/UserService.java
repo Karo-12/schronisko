@@ -33,7 +33,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
     public List<User> listEmployees() {
-        return userRepository.findByPermissionIs(2);
+        return userRepository.findByRoleIs("EMPLOYEE");
     }
 
 }

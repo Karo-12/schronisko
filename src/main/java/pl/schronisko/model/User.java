@@ -33,8 +33,8 @@ public class User {
     @Column(name = "address", nullable = false, length = 45)
     private String address;
 
-    @Column(name = "permission", nullable = false)
-    private Integer permission;
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @Column(name = "birthday", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

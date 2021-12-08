@@ -65,7 +65,7 @@ public class UserController {
     }
     @PostMapping("/users/save_register")
     public String registerUserSave(User user, RedirectAttributes ra){
-        user.setPermission(1);
+        user.setRole("USER");
         userService.save(user);
         ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/users";
