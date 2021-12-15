@@ -19,44 +19,44 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">First Name:</label>
+                <label class="col-sm-4 col-form-label">Imię:</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{name}" class="form-control " required minlength="2" maxlength="45"/>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Last Name:</label>
+                <label class="col-sm-4 col-form-label">Nazwisko:</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{surname}" class="form-control" required minlength="2" maxlength="45"/>
                 </div>
             </div>
             <div class="form-group row" >
-                <label class="col-sm-4 col-form-label">Password:</label>
+                <label class="col-sm-4 col-form-label">Haslo:</label>
                 <div class="col-sm-8">
                     <input type="password" th:field="*{password}" class="form-control" required minlength="4" maxlength="15"/>
                 </div>
             </div>
             <div class="form-group row" >
-                <label class="col-sm-4 col-form-label">Address</label>
+                <label class="col-sm-4 col-form-label">Adres:</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{address}" class="form-control" required minlength="4" maxlength="45"/>
                 </div>
             </div>
             <div class="form-group row" >
-                <label class="col-sm-4 col-form-label">Birthdate</label>
+                <label class="col-sm-4 col-form-label">Data urodzenia:</label>
                 <div class="col-sm-8">
                     <input type="date" th:field="*{birthday}"/>
                 </div>
             </div>
             <div class="form-group row" >
-                <label class="col-sm-4 col-form-label">Role</label>
+                <label class="col-sm-4 col-form-label">Rola:</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{role}" class="form-control" required minlength="4" maxlength="11">
                 </div>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary m-2">Save</button>
-                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+                <button type="submit" class="btn btn-primary m-2">Dodaj</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Anuluj</button>
             </div>
         </div>
     </form>

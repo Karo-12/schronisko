@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class ="container-fluid">
+    <div class="text-center"><h2>Zaloguj się</h2></div>
+    <form th:action="@{/login}" method="post" style="max-width: 500px; margin:0 auto; " >
+            <div class="border border-secondary rounded p-3">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Email:</label>
+                    <div class="col-sm-8">
+                        <label>
+                            <input type="text" id="username" name="username" autofocus="autofocus" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Haslo:</label>
+                    <div class="col-sm-8">
+                        <label>
+                            <input type="password" id="password" name="password" />
+                        </label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary m-2">Zaloguj</button>
+                    <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Anuluj</button>
+                </div>
+            </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function cancelForm(){
+        window.location="[[@{/index}]]";
+    }
+</script>
+</body>
+</html>

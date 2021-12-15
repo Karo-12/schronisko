@@ -84,7 +84,7 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Opiekun</label>
                 <select id="user" required th:field="*{idUser.id}" class="form-control ">
-                    <option value="" hidden>Wybierz rase</option>
+                    <option value="" hidden>Wybierz Opiekuna</option>
                     <option th:each="user : ${users}"
                             th:value="${user.id}"
                             th:text="${user.email}">

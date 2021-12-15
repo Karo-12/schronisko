@@ -6,7 +6,6 @@
     <title>Schronisko Futrzak | Przeglądaj zwierzęta</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div>
@@ -28,8 +27,8 @@
             <tr>
                 <td>[[${animalProfile.id}]]</td>
                 <td>[[${animalProfile.name}]]</td>
-                <td>[[${animalProfile.idRace.idType.type}]]</td>
-                <td>[[${animalProfile.idRace.race}]]</td>
+                <td>[[${animalProfile.idRace.idType.name}]]</td>
+                <td>[[${animalProfile.idRace.name}]]</td>
                 <td>[[${animalProfile.status}]]</td>
             </tr>
         </tbody>

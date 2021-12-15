@@ -39,7 +39,7 @@ public class Animal {
 
     @Lob
     @Column(name = "status", nullable = false)
-    private String status;
+    private String status; // wolny, zarezerwowany, zaadoptowany
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "idUser", nullable = false)
