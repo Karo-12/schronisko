@@ -2,6 +2,7 @@ package pl.schronisko.controller;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @GetMapping("/users")
     public String showUserList(Model model) {
@@ -32,6 +36,8 @@ public class UserController {
     }
     @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes ra){
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         userService.save(user);
         ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/users";
@@ -65,10 +71,12 @@ public class UserController {
     }
     @PostMapping("/users/save_register")
     public String registerUserSave(User user, RedirectAttributes ra){
-        user.setRole("USER");
+        user.setRole("ROLE_USER");
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         userService.save(user);
         ra.addFlashAttribute("message","The user has been saved successfully");
-        return "redirect:/users";
+        return "redirect:/";
     }
 
 

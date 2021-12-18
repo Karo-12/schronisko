@@ -34,7 +34,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
     public List<User> listEmployees() {
-        return userRepository.findByRoleIs("EMPLOYEE");
+        return userRepository.findByRoleIs("ROLE_EMPLOYEE");
     }
 
 }

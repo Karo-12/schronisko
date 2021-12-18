@@ -18,13 +18,13 @@
         <thead class="table-dark">
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Password</th>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Haslo</th>
             <th>E-mail</th>
-            <th>Address</th>
-            <th>Birthday</th>
-            <th>Permission</th>
+            <th>Adres</th>
+            <th>Data urodzenia</th>
+            <th>Rola</th>
             <th></th>
         </tr>
         </thead>
@@ -40,8 +40,8 @@
                 <td>[[${user.birthday}]]</td>
                 <td>[[${user.role}]]</td>
                 <td>
-                    <a class="h4 m-3" th:href="@{'/users/edit/'+${user.id}}">Edit</a>
-                    <a class="h4" th:href="@{'/users/delete/'+${user.id}}">Delete</a>
+                    <a class="h4 m-3" th:href="@{'/users/edit/'+${user.id}}">Edytuj</a>
+                    <a class="h4" th:href="@{'/users/delete/'+${user.id}}">Usuń</a>
                 </td>
             </tr>
         </th:block>
@@ -49,7 +49,7 @@
     </table>
 
     <div class="m-2">
-        <a class="h3" th:href="@{/users/new}">Add new User</a>
+        <a class="h3" th:href="@{/users/new}">Dodaj nowego użytkownika</a>
     </div>
 </div>
 </body>
