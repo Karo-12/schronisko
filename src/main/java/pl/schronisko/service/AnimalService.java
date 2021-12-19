@@ -25,7 +25,7 @@ public class AnimalService {
         if (result.isPresent()) return result.get();
         else throw new AnimalNotFoundException("Could not find Animal with id "+ id);
     }
-     public void save(Animal animal) {
+    public void save(Animal animal) {
         animalRepository.save(animal);
     }
     public void delete(Integer id) throws UserNotFoundException {

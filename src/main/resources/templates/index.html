@@ -13,6 +13,7 @@
     <a class="navbar-brand">Schronisko"Futrzak"</a>
     <li class="nav-item active">
         <a class="nav-link" th:href="@{/animals}">Przęglądaj zwierzęta</a>
+        <a class="nav-link" th:href="@{/reservations}">Przęglądaj rezerwacje</a>
         <div sec:authorize = "hasRole('ADMIN')">
         <a class="nav-link" th:href="@{/users}">Zarządzaj użytkownikami</a>
         </div>

@@ -13,11 +13,13 @@ public class MyUserDetails implements UserDetails {
 
     private String email;
     private String password;
+    private int id;
     private List<GrantedAuthority> authorities;
 
     public MyUserDetails(User user) {
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.id = id;
         this.authorities = Arrays.stream(user.getRole().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -57,4 +59,5 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

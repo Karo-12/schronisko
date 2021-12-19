@@ -2,9 +2,11 @@ package pl.schronisko.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Table(name = "reservation", indexes = {
         @Index(name = "fk_Reservation_User1_idx", columnList = "id_user"),
@@ -21,10 +23,12 @@ public class Reservation {
     private String address;
 
     @Column(name = "birthday")
-    private Instant birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
 
     @Column(name = "date", nullable = false)
-    private Instant date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
     @Column(name = "description", nullable = false, length = 100)
     private String description;

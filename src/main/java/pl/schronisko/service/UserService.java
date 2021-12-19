@@ -37,4 +37,8 @@ public class UserService {
         return userRepository.findByRoleIs("ROLE_EMPLOYEE");
     }
 
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 }
