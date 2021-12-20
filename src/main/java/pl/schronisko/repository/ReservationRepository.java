@@ -5,4 +5,5 @@ import pl.schronisko.model.Reservation;
 import pl.schronisko.model.ReservationId;
 
 public interface ReservationRepository extends CrudRepository<Reservation, ReservationId> {
+    Long countById(ReservationId id);
 }

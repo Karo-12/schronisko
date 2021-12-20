@@ -42,7 +42,8 @@
                 <td>[[${reservation.birthday}]]</td>
                 <td>[[${reservation.address}]]</td>
                 <td>
-
+                    <a class="h4 m-3" th:href="@{'/reservations/delete/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}">Usuń</a>
                 </td>
             </tr>
         </th:block>

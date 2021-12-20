@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.schronisko.exception.ReservationNotFoundException;
+import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.*;
 import pl.schronisko.service.ReservationService;
 import pl.schronisko.service.UserService;
@@ -50,5 +52,16 @@ public class ReservationController {
         reservationService.saveReservation(reservation);
         ra.addFlashAttribute("message","Rezerwacja zostala dodana");
         return "redirect:/animals";
+    }
+    @GetMapping("/reservations/delete/{idReservation}/{idAnimal}/{idUser}")
+    public String deleteReservation(@PathVariable("idReservation") Integer idReservation, RedirectAttributes ra, @PathVariable Integer idAnimal, @PathVariable Integer idUser) {
+        try {
+            ReservationId id = new ReservationId(idAnimal, idReservation, idUser);
+            reservationService.delete(id);
+            ra.addFlashAttribute("message", " The Reservation Id has been deleted.");
+        } catch (ReservationNotFoundException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+        }
+        return "redirect:/reservations";
     }
 }
