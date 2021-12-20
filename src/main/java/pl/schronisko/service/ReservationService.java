@@ -28,8 +28,12 @@ public class ReservationService {
     }
     public Integer nextReservationId() {
         List<Reservation> reservations = listAll();
-        Integer lastId = reservations.get(reservations.size()-1).getId().getIdReservation();
-        lastId +=1;
+        Integer lastId = 0;
+        if(reservations.size() == 0) lastId = 1;
+        else {
+            lastId = reservations.get(reservations.size() - 1).getId().getIdReservation();
+            lastId += 1;
+        }
         return lastId;
     }
     public void delete(ReservationId id) throws ReservationNotFoundException {

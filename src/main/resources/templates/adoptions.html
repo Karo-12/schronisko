@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Schronisko Futrzak | Przeglądaj reserwacje</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div>
+    <br>
+    <br>
+</div>
+<div>
+    <table class = "table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Data adopcji</th>
+            <th>Opis</th>
+            <th>Id Zwierzecia</th>
+            <th>Id Usera</th>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Data urodzenia</th>
+            <th>Adress</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="adoption : ${listOfAdoptions}">
+            <tr>
+                <td>[[${adoption.id.idAdoption}]]</td>
+                <td>[[${adoption.date}]]</td>
+                <td>[[${adoption.description}]]</td>
+                <td>[[${adoption.id.idAnimal}]]</td>
+                <td>[[${adoption.id.idUser}]]</td>
+                <td>[[${adoption.name}]]</td>
+                <td>[[${adoption.surname}]]</td>
+                <td>[[${adoption.birthday}]]</td>
+                <td>[[${adoption.address}]]</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

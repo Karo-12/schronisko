@@ -13,12 +13,13 @@
     <a class="navbar-brand">Schronisko"Futrzak"</a>
     <li class="nav-item active">
         <a class="nav-link" th:href="@{/animals}">Przęglądaj zwierzęta</a>
-        <a class="nav-link" th:href="@{/reservations}">Przęglądaj rezerwacje</a>
         <div sec:authorize = "hasRole('ADMIN')">
         <a class="nav-link" th:href="@{/users}">Zarządzaj użytkownikami</a>
         </div>
-        <div sec:authorize ="hasAnyRole('USER','ADMIN')">
-        <a class="nav-link" th:href="@{/manage_animals}">Zarządzaj zwierzętami</a>
+        <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+            <a class="nav-link" th:href="@{/manage_animals}">Zarządzaj zwierzętami</a>
+            <a class="nav-link" th:href="@{/reservations}">Przęglądaj rezerwacje</a>
+            <a class="nav-link" th:href="@{/adoptions}">Przęglądaj historie adopcji</a>
         </div>
         <div sec:authorize="!isAuthenticated()">
             <a class="nav-link" th:href="@{/users/register}">Zarejestruj</a>

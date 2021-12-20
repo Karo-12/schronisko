@@ -44,6 +44,8 @@
                 <td>
                     <a class="h4 m-3" th:href="@{'/reservations/delete/'+${reservation.id.idReservation}
                     +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}">Usuń</a>
+                    <a class="h4 m-3" th:href="@{'/reservations/accept/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}">Akceptuj</a>
                 </td>
             </tr>
         </th:block>
