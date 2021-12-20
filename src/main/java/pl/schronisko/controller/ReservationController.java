@@ -78,5 +78,16 @@ public class ReservationController {
             return "redirect:/";
         }
     }
+    @GetMapping("/reservation/delete/{idReservation}/{idAnimal}/{idUser}")
+    public String cancelReservation(@PathVariable("idReservation") Integer idReservation, RedirectAttributes ra, @PathVariable Integer idAnimal, @PathVariable Integer idUser) {
+        try {
+            ReservationId id = new ReservationId(idAnimal, idReservation, idUser);
+            reservationService.delete(id);
+            ra.addFlashAttribute("message", " The Reservation Id has been deleted.");
+        } catch (ReservationNotFoundException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+        }
+        return "redirect:/";
+    }
 
 }

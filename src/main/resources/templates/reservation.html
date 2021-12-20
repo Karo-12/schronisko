@@ -30,7 +30,8 @@
         </tbody>
     </table>
     <div class="m-2">
-        
+        <a class="h4 m-3" th:href="@{'/reservation/delete/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}">Anuluj</a>
     </div>
 </div>
 </body>
