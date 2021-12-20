@@ -21,14 +21,15 @@
         <a class="nav-link" th:href="@{/manage_animals}">Zarządzaj zwierzętami</a>
         </div>
         <div sec:authorize="!isAuthenticated()">
-        <a class="nav-link" th:href="@{/users/register}">Zarejestruj</a>
-        <a class="nav-link" th:href="@{/login}">Zaloguj sie</a>
+            <a class="nav-link" th:href="@{/users/register}">Zarejestruj</a>
+            <a class="nav-link" th:href="@{/login}">Zaloguj sie</a>
         </div>
         <div sec:authorize="isAuthenticated()">
-        <a class="nav-link" th:href="@{/logout}">Wyloguj sie</a>
+            <a class="nav-link" th:href="@{/reservation}">Rezerwacja</a>
+            <a class="nav-link" th:href="@{/logout}">Wyloguj sie</a>
         </div>
-
     </li>
+
 </nav>
 </body>
 </html>

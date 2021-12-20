@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
 import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.*;
@@ -64,4 +65,18 @@ public class ReservationController {
         }
         return "redirect:/reservations";
     }
+    @GetMapping("/reservation")
+    public String showAnimalProfile(Model model, RedirectAttributes ra) {
+        try {
+            MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.findUserByEmail(activeUser.getUsername());
+            Reservation reservation = reservationService.getReservationByUserId(user.getId());
+            model.addAttribute("reservation", reservation);
+            return "reservation";
+        }catch(ReservationNotFoundException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/";
+        }
+    }
+
 }

@@ -2,13 +2,17 @@ package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
 import pl.schronisko.exception.UserNotFoundException;
+import pl.schronisko.model.Animal;
 import pl.schronisko.model.Reservation;
 import pl.schronisko.model.ReservationId;
 import pl.schronisko.repository.ReservationRepository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -34,5 +38,14 @@ public class ReservationService {
             throw new ReservationNotFoundException("Could not find any user with ID: "+id);
         }
         reservationRepository.deleteById(id);
+    }
+    public Reservation getReservationByUserId(Integer id) throws ReservationNotFoundException{
+        List <Reservation> reservations = listAll();
+        Reservation result = null;
+        for (Reservation reservation : reservations) {
+            if (Objects.equals(reservation.getId().getIdUser(), id)) result = reservation;
+        }
+        if( result == null) throw new ReservationNotFoundException("Reservation not found");
+        else return result;
     }
 }
