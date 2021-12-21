@@ -92,6 +92,13 @@
                     </option>
                 </select>
             </div>
+            <div class="col-sm-8">
+                <label class="col-sm-4 col-form-label">Opis</label>
+                <label>
+                        <textarea th:field="*{description}" rows = 10 cols = 50 required>
+                        </textarea>
+                </label>
+            </div>
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary m-2">Save</button>

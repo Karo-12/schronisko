@@ -49,4 +49,7 @@ public class Animal {
     @JoinColumn(name = "idRace", nullable = false)
     private Race idRace;
 
+    @Column(name = "description", nullable = false, length = 100)
+    private String description;
+
 }
