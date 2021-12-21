@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.schronisko.exception.AnimalNotAvailableException;
+import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
 import pl.schronisko.model.*;
+import pl.schronisko.service.AnimalService;
 import pl.schronisko.service.ReservationService;
 import pl.schronisko.service.UserService;
 import java.time.LocalDate;
@@ -22,6 +24,9 @@ public class ReservationController {
     private ReservationService reservationService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private AnimalService animalService;
+
     @GetMapping("/reservations")
     public String showReservationList(Model model){
         List<Reservation> reservations = reservationService.listAll();
@@ -38,7 +43,7 @@ public class ReservationController {
     public String saveReservation(Reservation reservation, RedirectAttributes ra, @PathVariable Integer idAnimal) {
         try {
             reservationService.saveReservation(reservation, idAnimal);
-        } catch(AnimalNotAvailableException e) {
+        } catch(AnimalNotAvailableException | AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
         ra.addFlashAttribute("message","Rezerwacja zostala dodana");
@@ -49,8 +54,13 @@ public class ReservationController {
         try {
             ReservationId id = new ReservationId(idAnimal, idReservation, idUser);
             reservationService.delete(id);
+            Animal animal = animalService.getAnimalById(idAnimal);
+            if(animal.getStatus().equals("reserved")) {
+                animal.setStatus("available");
+                animalService.save(animal);
+            }
             ra.addFlashAttribute("message", " The Reservation Id has been deleted.");
-        } catch (ReservationNotFoundException e) {
+        } catch (ReservationNotFoundException | AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
         return "redirect:/reservations";
@@ -68,13 +78,16 @@ public class ReservationController {
             return "redirect:/";
         }
     }
-    @GetMapping("/reservation/delete/{idReservation}/{idAnimal}/{idUser}")
+    @GetMapping("/reservation/cancel/{idReservation}/{idAnimal}/{idUser}")
     public String cancelReservation(@PathVariable("idReservation") Integer idReservation, RedirectAttributes ra, @PathVariable Integer idAnimal, @PathVariable Integer idUser) {
         try {
             ReservationId id = new ReservationId(idAnimal, idReservation, idUser);
             reservationService.delete(id);
+            Animal animal = animalService.getAnimalById(idAnimal);
+            animal.setStatus("available");
+            animalService.save(animal);
             ra.addFlashAttribute("message", " The Reservation Id has been deleted.");
-        } catch (ReservationNotFoundException e) {
+        } catch (ReservationNotFoundException | AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
         return "redirect:/";

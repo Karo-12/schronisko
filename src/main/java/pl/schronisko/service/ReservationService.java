@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.schronisko.exception.AnimalNotAvailableException;
+import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
-import pl.schronisko.model.MyUserDetails;
-import pl.schronisko.model.Reservation;
-import pl.schronisko.model.ReservationId;
-import pl.schronisko.model.User;
+import pl.schronisko.model.*;
 import pl.schronisko.repository.ReservationRepository;
 
 import java.time.LocalDate;
@@ -28,7 +26,7 @@ public class ReservationService {
     public List<Reservation> listAll() {
         return (List<Reservation>) reservationRepository.findAll();
     }
-    public void saveReservation(Reservation reservation, Integer idAnimal) throws AnimalNotAvailableException {
+    public void saveReservation(Reservation reservation, Integer idAnimal) throws AnimalNotAvailableException, AnimalNotFoundException {
         MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByEmail(activeUser.getUsername());
         ReservationId id = new ReservationId();
@@ -39,6 +37,9 @@ public class ReservationService {
             reservation.setId(id);
             reservation.setDate(LocalDate.now());
             reservationRepository.save(reservation);
+            Animal animal = animalService.getAnimalById(idAnimal);
+            animal.setStatus("reserved");
+            animalService.save(animal);
         }
         else throw new AnimalNotAvailableException("Animal is already reserved or adopted");
     }
