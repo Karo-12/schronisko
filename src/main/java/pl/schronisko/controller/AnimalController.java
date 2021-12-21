@@ -27,8 +27,6 @@ public class AnimalController {
     @Autowired
     private RaceService raceService;
     @Autowired
-    private TypeService typeService;
-    @Autowired
     private UserService userService;
 
 

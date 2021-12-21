@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.schronisko.exception.UserHasAnimalException;
 import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.User;
 import pl.schronisko.service.UserService;
@@ -57,7 +58,7 @@ public class UserController {
         try {
             userService.delete(id);
             ra.addFlashAttribute("message", " The user ID: "+id+" has been deleted.");
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | UserHasAnimalException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
         return "redirect:/users";
