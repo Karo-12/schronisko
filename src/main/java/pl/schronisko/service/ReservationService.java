@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.schronisko.exception.AnimalNotAvailableException;
 import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
+import pl.schronisko.exception.UserHasAnimalException;
 import pl.schronisko.model.*;
 import pl.schronisko.repository.ReservationRepository;
 
@@ -26,11 +27,13 @@ public class ReservationService {
     public List<Reservation> listAll() {
         return (List<Reservation>) reservationRepository.findAll();
     }
-    public void saveReservation(Reservation reservation, Integer idAnimal) throws AnimalNotAvailableException, AnimalNotFoundException {
+    public void saveReservation(Reservation reservation, Integer idAnimal) throws AnimalNotAvailableException, AnimalNotFoundException, UserHasAnimalException {
         MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByEmail(activeUser.getUsername());
         ReservationId id = new ReservationId();
-        if(!animalService.isAnimalAdopted(idAnimal) && !animalService.isAnimalReserved(idAnimal)) {
+        if(hasUserReservedAnimal(user.getId())) {
+            throw new UserHasAnimalException("User reserved animal already");
+        } else if(!animalService.isAnimalAdopted(idAnimal) && !animalService.isAnimalReserved(idAnimal)) {
             id.setIdAnimal(idAnimal);
             id.setIdUser(user.getId());
             id.setIdReservation(nextReservationId());
@@ -40,8 +43,7 @@ public class ReservationService {
             Animal animal = animalService.getAnimalById(idAnimal);
             animal.setStatus("reserved");
             animalService.save(animal);
-        }
-        else throw new AnimalNotAvailableException("Animal is already reserved or adopted");
+        } else throw new AnimalNotAvailableException("Animal is already reserved or adopted");
     }
     public Integer nextReservationId() {
         List<Reservation> reservations = listAll();
@@ -68,5 +70,14 @@ public class ReservationService {
         }
         if( result == null) throw new ReservationNotFoundException("Reservation not found");
         else return result;
+    }
+    public boolean hasUserReservedAnimal(Integer idUser) {
+        List<Reservation> reservations = listAll();
+        for(Reservation reservation : reservations) {
+            if(Objects.equals(reservation.getId().getIdUser(), idUser)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

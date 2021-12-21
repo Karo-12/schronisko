@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.schronisko.exception.AnimalNotAvailableException;
 import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
+import pl.schronisko.exception.UserHasAnimalException;
 import pl.schronisko.model.*;
 import pl.schronisko.service.AnimalService;
 import pl.schronisko.service.ReservationService;
@@ -43,7 +44,7 @@ public class ReservationController {
     public String saveReservation(Reservation reservation, RedirectAttributes ra, @PathVariable Integer idAnimal) {
         try {
             reservationService.saveReservation(reservation, idAnimal);
-        } catch(AnimalNotAvailableException | AnimalNotFoundException e) {
+        } catch(AnimalNotAvailableException | AnimalNotFoundException | UserHasAnimalException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
         ra.addFlashAttribute("message","Rezerwacja zostala dodana");
