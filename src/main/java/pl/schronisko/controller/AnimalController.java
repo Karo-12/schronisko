@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.UserNotFoundException;
@@ -64,7 +65,9 @@ public class AnimalController {
         return "new_animal_form";
     }
     @PostMapping("/manage_animals/save")
-    public String saveAnimal(Animal animal, RedirectAttributes ra) {
+    public String saveAnimal(Animal animal, RedirectAttributes ra, @RequestParam("type") String type, @RequestParam("race") String race) {
+        Race r = raceService.getRace(type,race);
+        animal.setIdRace(r);
         animalService.save(animal);
         ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/manage_animals";
