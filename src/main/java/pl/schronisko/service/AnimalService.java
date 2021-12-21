@@ -8,6 +8,7 @@ import pl.schronisko.model.Animal;
 import pl.schronisko.repository.AnimalRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,5 +36,26 @@ public class AnimalService {
         }
         animalRepository.deleteById(id);
     }
-
+    public boolean isAnimalReserved(Integer idAnimal) {
+        List<Animal> animals = listAll();
+        Animal result = null;
+        for(Animal animal : animals) {
+            if(Objects.equals(animal.getId(), idAnimal)) {
+                result = animal;
+            }
+        }
+        assert result != null;
+        return result.getStatus().equals("reserved");
+    }
+    public boolean isAnimalAdopted(Integer idAnimal) {
+        List<Animal> animals = listAll();
+        Animal result = null;
+        for(Animal animal : animals) {
+            if(Objects.equals(animal.getId(), idAnimal)) {
+                result = animal;
+            }
+        }
+        assert result != null;
+        return result.getStatus().equals("adopted");
+    }
 }

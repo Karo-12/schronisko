@@ -1,12 +1,17 @@
 package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.schronisko.exception.AnimalNotAvailableException;
 import pl.schronisko.exception.ReservationNotFoundException;
+import pl.schronisko.model.MyUserDetails;
 import pl.schronisko.model.Reservation;
 import pl.schronisko.model.ReservationId;
+import pl.schronisko.model.User;
 import pl.schronisko.repository.ReservationRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,12 +20,27 @@ public class ReservationService {
 
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AnimalService animalService;
 
     public List<Reservation> listAll() {
         return (List<Reservation>) reservationRepository.findAll();
     }
-    public void saveReservation(Reservation reservation) {
-        reservationRepository.save(reservation);
+    public void saveReservation(Reservation reservation, Integer idAnimal) throws AnimalNotAvailableException {
+        MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByEmail(activeUser.getUsername());
+        ReservationId id = new ReservationId();
+        if(!animalService.isAnimalAdopted(idAnimal) && !animalService.isAnimalReserved(idAnimal)) {
+            id.setIdAnimal(idAnimal);
+            id.setIdUser(user.getId());
+            id.setIdReservation(nextReservationId());
+            reservation.setId(id);
+            reservation.setDate(LocalDate.now());
+            reservationRepository.save(reservation);
+        }
+        else throw new AnimalNotAvailableException("Animal is already reserved or adopted");
     }
     public Integer nextReservationId() {
         List<Reservation> reservations = listAll();

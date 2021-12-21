@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.schronisko.exception.AnimalNotAvailableException;
 import pl.schronisko.exception.ReservationNotFoundException;
 import pl.schronisko.model.*;
 import pl.schronisko.service.ReservationService;
@@ -34,16 +35,12 @@ public class ReservationController {
         return "new_reservation_form";
     }
     @PostMapping("reservations/save/{idAnimal}")
-    public String saveAnimal(Reservation reservation, RedirectAttributes ra, @PathVariable Integer idAnimal) {
-        MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByEmail(activeUser.getUsername());
-        ReservationId id = new ReservationId();
-        id.setIdAnimal(idAnimal);
-        id.setIdUser(user.getId());
-        id.setIdReservation(reservationService.nextReservationId());
-        reservation.setId(id);
-        reservation.setDate(LocalDate.now());
-        reservationService.saveReservation(reservation);
+    public String saveReservation(Reservation reservation, RedirectAttributes ra, @PathVariable Integer idAnimal) {
+        try {
+            reservationService.saveReservation(reservation, idAnimal);
+        } catch(AnimalNotAvailableException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+        }
         ra.addFlashAttribute("message","Rezerwacja zostala dodana");
         return "redirect:/animals";
     }
