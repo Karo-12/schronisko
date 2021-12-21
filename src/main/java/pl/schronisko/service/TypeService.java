@@ -3,7 +3,6 @@ package pl.schronisko.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.schronisko.model.Type;
-import pl.schronisko.model.User;
 import pl.schronisko.repository.TypeRepository;
 
 import java.util.List;

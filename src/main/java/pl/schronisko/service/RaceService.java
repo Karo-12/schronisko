@@ -2,11 +2,8 @@ package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.RaceNotFoundException;
-import pl.schronisko.model.Animal;
 import pl.schronisko.model.Race;
-import pl.schronisko.model.Type;
 import pl.schronisko.repository.RaceRepository;
 
 import java.util.List;

@@ -2,17 +2,13 @@ package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.ReservationNotFoundException;
-import pl.schronisko.exception.UserNotFoundException;
-import pl.schronisko.model.Animal;
 import pl.schronisko.model.Reservation;
 import pl.schronisko.model.ReservationId;
 import pl.schronisko.repository.ReservationRepository;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ReservationService {

@@ -2,11 +2,9 @@ package pl.schronisko.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Table(name = "adoption", indexes = {
