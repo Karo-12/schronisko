@@ -9,7 +9,7 @@ public class AppController {
 
     @GetMapping("/")
     public String mainPage() {
-        return "index";
+        return "index2";
     }
 
     // Login form

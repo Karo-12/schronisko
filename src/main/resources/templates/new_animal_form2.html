@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Schronisko Futrzak | Nowe</title>
+        <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}">
+    </head>
+    <body>
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-success clean-navbar" style="background: var(--bs-gray-100);color: rgb(255,255,255);">
+            <div class="container">
+                <a class="navbar-brand link-warning logo" th:href="@{/}">Schronisko "Futrzak"</a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(50,186,104);">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/login}">zaloguj</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/users/register}">zarejestruj</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main class="page registration-page">
+            <section class="clean-block clean-form dark">
+                <div class="container">
+                    <div class="block-heading">
+                        <h2 class="text-success">Dodaj nowe zwierzę</h2>
+                    </div>
+                </div>
+                <form th:action="@{/manage_animals/save}" method = "post" th:object ="${animal}" style="height: 1007px;">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Imię</label>
+                        <input class="form-control item" type="text" th:field="*{name}" id="name" required minlength="2" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="age">Wiek</label>
+                        <input class="form-control item" th:field="*{age}" type="number" id="age" required minlength="2" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="date">Data przyjęcia</label>
+                        <input class="form-control" th:field="*{arrivalDate}" type="date" id="date">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="cageNumber">Numer klatki</label>
+                        <input class="form-control item" th:field="*{cageNumber}" type="number" id="cageNumber" required minlength="4" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="type">Typ</label>
+                        <input class="form-control" th:name="type" th:value="*{idRace?.idType?.name}" type="text" id="type" required minlength="3" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="race">Rasa</label>
+                        <input class="form-control" th:name="race" th:value="*{idRace?.name}" type="text" id="race" required minlength="3" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Opis</label>
+                        <textarea class="form-control" th:field="*{description}" id="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" >Płeć</label>
+                        <div class="form-check">
+                            <input class="form-check-input" th:field="*{gender}" th:value="male" type="radio" id="formCheck-1" required>
+                            <label class="form-check-label" for="formCheck-1">male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" th:field="*{gender}" th:value="female" type="radio" id="formCheck-2">
+                            <label class="form-check-label" for="formCheck-2">female</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" th:field="*{status}">
+                            <optgroup label="Wybierz status">
+                                <option th:value="available"  th:name = "status" >Dostępny</option>
+                                <option th:value="reserved"  th:name = "status" >Zarezerwowany</option>
+                                <option th:value="adopted" th:name = "status" >zaadoptowany</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" >Opiekun</label>
+                        <select class="form-select" th:field="*{idUser.id}" required>
+                            <optgroup label="Wybierz status">
+                                <option th:each="user : ${users}"
+                                        th:value="${user.id}"
+                                        th:text="${user.email}">
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit" style="padding: 5px 12px;margin: 1px;">Dodaj</button>
+                    <button class="btn btn-secondary m-2" type="button" style="margin: 15px;padding: 6px 12px;
+                    background: rgb(151,154,159);border-width: 0px;" onclick="cancelForm()">Anuluj</button>
+                    </form>
+                </section>
+            </main>
+            <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+            <script src="/assets/js/script.min.js"></script>
+            <script type="text/javascript">
+                function cancelForm(){
+                    window.location="[[@{/manage_animals}]]";
+                }
+            </script>
+        </body>
+    </html>

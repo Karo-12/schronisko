@@ -26,12 +26,12 @@ public class UserController {
     public String showUserList(Model model) {
         List<User> users = userService.listAll();
         model.addAttribute("listOfUsers", users);
-        return "users";
+        return "users2";
     }
     @GetMapping("users/new")
     public String addNewUser(Model model) {
         model.addAttribute("user", new User());
-        return "new_user_form";
+        return "new_user_form2";
     }
     @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes ra){
@@ -47,7 +47,7 @@ public class UserController {
             User user = userService.get(id);
             model.addAttribute("user", user);
             model.addAttribute("pageTitle", "Edit User (ID: "+id+")");
-            return "new_user_form";
+            return "new_user_form2";
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/users";
@@ -66,7 +66,7 @@ public class UserController {
     @GetMapping("users/register")
     public String registerUser(Model model) {
         model.addAttribute("user", new User());
-        return "registration_form";
+        return "registration2";
     }
     @PostMapping("/users/save_register")
     public String registerUserSave(User user, RedirectAttributes ra){

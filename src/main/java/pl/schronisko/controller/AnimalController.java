@@ -35,14 +35,14 @@ public class AnimalController {
     public String showAnimalList(Model model){
         List<Animal> animals = animalService.listAll();
         model.addAttribute("listAnimals", animals);
-        return "animals";
+        return "animals2";
     }
     @GetMapping("/profile/{id}")
     public String showAnimalProfile(@PathVariable String id, Model model, RedirectAttributes ra) {
         try {
             Animal animal = animalService.getAnimalById(Integer.parseInt(id));
             model.addAttribute("animalProfile", animal);
-            return "profile";
+            return "profile2";
 
         }catch(AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
@@ -53,7 +53,7 @@ public class AnimalController {
     public String showAnimalsListManage(Model model) {
         List<Animal> animals = animalService.listAll();
         model.addAttribute("listAnimals", animals);
-        return "manage_animals";
+        return "manage_animals2";
     }
     @GetMapping("manage_animals/new")
     public String addNewUser(Model model) {
@@ -62,7 +62,7 @@ public class AnimalController {
         model.addAttribute("animal", new Animal());
         model.addAttribute("races", races);
         model.addAttribute("users", users);
-        return "new_animal_form";
+        return "new_animal_form2";
     }
     @PostMapping("/manage_animals/save")
     public String saveAnimal(Animal animal, RedirectAttributes ra, @RequestParam("type") String type, @RequestParam("race") String race) {
@@ -81,7 +81,7 @@ public class AnimalController {
             model.addAttribute("animal", animal);
             model.addAttribute("races", races);
             model.addAttribute("users", users);
-            return "new_animal_form";
+            return "new_animal_form2";
         } catch (AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/users";

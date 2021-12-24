@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="text-white" lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Schronisko Futrzak | Logowanie</title>
+        <title>Schronisko Futrzak | Zarządzaj zwierzętami</title>
         <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
@@ -33,36 +33,53 @@
                 </div>
             </div>
         </nav>
-        <main class="page login-page">
-            <section class="clean-block clean-form dark">
+        <main class="page">
+            <section class="clean-block about-us" style="height: 183px;">
                 <div class="container">
                     <div class="block-heading">
-                        <h2 class="text-success">Zaloguj się</h2>
-                        <p></p>
+                        <h2 class="text-success">Zarządzaj zwierzętami</h2>
                     </div>
-                    <form th:action="@{/login}" method="post" style="max-width: 500px; margin:0 auto; " >
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Email</label>
-                            <input class="form-control item" type="text" id="username" name="username" autofocus="autofocus">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Hasło</label>
-                            <input class="form-control" type="password" id="password" name= "password">
-                        </div>
-                        <div class="mb-3"></div>
-                        <button class="btn btn-primary" type="submit">Zaloguj</button>
-                        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Anuluj</button>
-                    </form>
                 </div>
             </section>
         </main>
+        <div class="table-responsive">
+            <a class="btn btn-outline-success btn-lg" th:href="@{/manage_animals/new}">Dodaj nowe zwierze</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imie</th>
+                        <th>Typ</th>
+                        <th>Rasa</th>
+                        <th>Opiekun</th>
+                        <th>Status</th>
+                        <th>Wiek</th>
+                        <th>Płeć</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="animal : ${listAnimals}">
+                    <tr>
+                        <td>[[${animal.id}]]</td>
+                        <td>[[${animal.name}]]</td>
+                        <td>[[${animal.idRace.idType.name}]]</td>
+                        <td>[[${animal.idRace.name}]]</td>
+                        <td>[[${animal.idUser.email}]]</td>
+                        <td>[[${animal.status}]]</td>
+                        <td>[[${animal.age}]]</td>
+                        <td>[[${animal.gender}]]</td>
+                        <td>
+                            <a class="btn btn-success text-end" th:href="@{'/manage_animals/edit/'+${animal.id}}" type="button" style="margin: -1px;">Edytuj</a>
+                            <a class="btn btn-danger text-end" th:href="@{'/manage_animals/delete/'+${animal.id}}" type="button" style="margin: 0px;">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
         <script src="/assets/js/script.min.js"></script>
-        <script type="text/javascript">
-            function cancelForm(){
-                window.location="[[@{/}]]";
-            }
-        </script>
     </body>
 </html>

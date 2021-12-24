@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="text-white" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+    <head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Schronisko Futrzak | Zarządzaj użytkownikami</title>
+        <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}">
+    </head>
+        <body>
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-success clean-navbar" style="background: var(--bs-gray-100);color: rgb(255,255,255);">
+                <div class="container">
+                    <a class="navbar-brand link-warning logo" th:href="@{/}">Schronisko "Futrzak"</a>
+                    <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                        <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(50,186,104);">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/login}">zaloguj</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/users/register}">zarejestruj</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <main class="page">
+                <section class="clean-block about-us" style="height: 185px;">
+                    <div class="container">
+                        <div class="block-heading">
+                            <h2 class="text-success">Zarządzaj użytkownikami</h2>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <div class="table-responsive">
+                <a class="btn btn-outline-success btn-lg" th:href="@{/users/new}">Dodaj nowego użytkownika</a>
+                <table class="table" style="height:600px;table-layout:fixed;">
+                    <thead>
+                        <tr>
+                            <th style="width:60px;">ID</th>
+                            <th style="width: 100px;">Imie</th>
+                            <th style="width: 150px">Nazwisko</th>
+                            <th>Hasło</th>
+                            <th>Email</th>
+                            <th>Adres</th>
+                            <th style="width: 150px">Data urodzenia</th>
+                            <th>Rola</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="user : ${listOfUsers}">
+                        <tr style="height:1em;">
+                            <td style="width: 60px;">[[${user.id}]]</td>
+                            <td style="width: 100px;">[[${user.name}]]</td>
+                            <td style="width: 150px;">[[${user.surname}]]</td>
+                            <td style = "overflow:hidden;white-space:nowrap;">[[${user.password}]]</td>
+                            <td>[[${user.email}]]</td>
+                            <td>[[${user.address}]]</td>
+                            <td>[[${user.birthday}]]</td>
+                            <td>[[${user.role}]]</td>
+                            <td>
+                                <a class="btn btn-success text-end" th:href="@{'/users/edit/'+${user.id}}" type="button" style="margin: -1px;">Edytuj</a>
+                                <a class="btn btn-danger text-end" th:href="@{'/users/delete/'+${user.id}}" type="button" style="margin: 0px;">Usuń</a>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+            <script src="/assets/js/script.min.js"></script>
+    </body>
+</html>

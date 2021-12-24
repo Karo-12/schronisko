@@ -32,13 +32,13 @@ public class ReservationController {
     public String showReservationList(Model model){
         List<Reservation> reservations = reservationService.listAll();
         model.addAttribute("listOfReservations", reservations);
-        return "reservations";
+        return "reservations2";
     }
     @GetMapping("reservations/new/{idAnimal}")
     public String addNewReservation(@PathVariable Integer idAnimal, Model model) {
         model.addAttribute("reservation", new Reservation());
         model.addAttribute("idAnimal", idAnimal);
-        return "new_reservation_form";
+        return "new_reservation_form2";
     }
     @PostMapping("reservations/save/{idAnimal}")
     public String saveReservation(Reservation reservation, RedirectAttributes ra, @PathVariable Integer idAnimal) {
@@ -73,7 +73,7 @@ public class ReservationController {
             User user = userService.findUserByEmail(activeUser.getUsername());
             Reservation reservation = reservationService.getReservationByUserId(user.getId());
             model.addAttribute("reservation", reservation);
-            return "reservation";
+            return "reservation2";
         }catch(ReservationNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/";

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Schronisko Futrzak | Logowanie</title>
+        <title>Schronisko Futrzak | Zarezerwuj</title>
         <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
@@ -33,27 +33,38 @@
                 </div>
             </div>
         </nav>
-        <main class="page login-page">
+        <main class="page registration-page">
             <section class="clean-block clean-form dark">
                 <div class="container">
                     <div class="block-heading">
-                        <h2 class="text-success">Zaloguj się</h2>
-                        <p></p>
+                        <h2 class="text-success">Zarezerwuj zwierzę</h2>
                     </div>
-                    <form th:action="@{/login}" method="post" style="max-width: 500px; margin:0 auto; " >
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Email</label>
-                            <input class="form-control item" type="text" id="username" name="username" autofocus="autofocus">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Hasło</label>
-                            <input class="form-control" type="password" id="password" name= "password">
-                        </div>
-                        <div class="mb-3"></div>
-                        <button class="btn btn-primary" type="submit">Zaloguj</button>
-                        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Anuluj</button>
-                    </form>
                 </div>
+                <form th:action="@{'/reservations/save/' + ${idAnimal}}" method = "post" th:object ="${reservation}" style="height: 587px;">
+                    <div class="mb-3">
+                        <label class="form-label" th:field="*{description}">Opis</label>
+                        <textarea class="form-control"></textarea>
+                    </div>
+                    <small>Wypełnij jeżeli zwierzę rezerwowane jest dla kogoś innego</small>
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Imię</label>
+                        <input class="form-control item" th:field="*{name}" type="text" id="name" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="surname">Nazwisko</label>
+                        <input class="form-control" th:field="*{surname}" type="text" id="surname" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Adres</label>
+                        <input class="form-control" th:field="*{address}" type="text" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Data urodzenia</label>
+                        <input class="form-control" th:field="*{birthday}" type="date">
+                    </div>
+                    <button class="btn btn-primary" type="submit" style="padding: 5px 12px;margin: 1px;">Zarezerwuj</button>
+                    <button class="btn btn-primary" onclick="cancelForm()" type="button" style="margin: 15px;padding: 6px 12px;background: rgb(151,154,159);border-width: 0px;">Anuluj</button>
+                </form>
             </section>
         </main>
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>

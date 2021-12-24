@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Schronisko Futrzak | Przegladaj zwierzeta</title>
+        <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}">
+    </head>
+    <body style="box-shadow: 0px 0px;">
+        <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-success clean-navbar" style="background: var(--bs-gray-100);color: rgb(255,255,255);">
+            <div class="container">
+                <a class="navbar-brand link-warning logo" th:href="@{/}">Schronisko "Futrzak"</a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(50,186,104);">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/login}">zaloguj</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/users/register}">zarejestruj</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main class="page">
+            <section class="clean-block about-us" style="height: 173px;">
+                <div class="container">
+                    <div class="block-heading">
+                        <h1 class="text-success">Dostępne zwierzęta</h1>
+                        <p></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <th:block th:each="animal : ${listAnimals}">
+        <div class="container">
+            <div class="row">
+                <div class="col offset-lg-0 d-table" style="text-align: left;background: rgb(230,227,227);color: rgb(0,2,4);width: 708px;
+                height: 139px;box-shadow: 0px 0px 4px 0px rgba(98,98,98,0.92);border-style: solid;border-top-style: none;border-right-style: none;
+                border-bottom-style: solid;border-bottom-color: rgb(54,210,79);border-left-style: none;filter: blur(0px) contrast(101%) saturate(104%);
+                transform: perspective(0px) scale(0.88) skew(0deg);">
+                    <div></div>
+                    <div class="row" style="height: 41px;">
+                        <div class="col" style="width: 55.094px;height: 43px;border-style: none;border-color: rgb(54,210,79);border-right-style: none;
+                        border-right-color: rgb(54, 210, 79);border-bottom-style: none;">
+                        <h5 class="text-start">Imie: [[${animal.name}]]</h5>
+                        </div>
+                        <div class="col" style="width: 87px;height: 43px;border-style: none;border-color: rgb(50,207,11);border-right-style: none;
+                        border-right-color: rgb(54,210,79);border-bottom-style: none;border-bottom-color: rgb(54,210,79);border-left-style: none;">
+                        <h5 class="text-start">Typ: [[${animal.idRace.idType.name}]]</h5>
+                        </div>
+                        <div class="col" style="width: 97px;height: 43px;border-style: none;border-color: rgb(73,239,15);border-right-style: none;
+                        border-right-color: rgb(54,210,79);border-bottom-style: none;border-bottom-color: rgb(54,210,79);">
+                        <h5 class="text-start">Rasa: [[${animal.idRace.name}]]</h5>
+                        </div>
+                        <div class="col" style="width: 91.719px;height: 43px;"></div>
+                        <div class="col text-end" style="height: 43px;">
+                            <a class="btn btn-success btn-lg text-center" th:href="@{'/profile/'+${animal.id}}" type="button" style="margin: 2px;width: 158.734px;height: 43px;text-align: right;">Pokaż profil</a>
+                        </div>
+                    </div>
+                    <p class="text-start" style="background: rgba(255,255,255,0);height: 72px;margin: 11px;">[[${animal.description}]]<br></p>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        </th:block>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="/assets/js/script.min.js"></script>
+    </body>
+</html>
