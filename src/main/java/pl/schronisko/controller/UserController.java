@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.schronisko.exception.EmailAlreadyInDatabaseException;
 import pl.schronisko.exception.UserHasAnimalException;
 import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.User;
@@ -70,10 +71,15 @@ public class UserController {
     }
     @PostMapping("/users/save_register")
     public String registerUserSave(User user, RedirectAttributes ra){
-        user.setRole("ROLE_USER");
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userService.save(user);
+        try {
+            user.setRole("ROLE_USER");
+            String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            userService.register(user);
+        }catch(EmailAlreadyInDatabaseException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/users/register";
+        }
         ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/";
     }

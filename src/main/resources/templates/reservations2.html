@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="text-white" xmlns:th="http://www.thymeleaf.org">
+<html class="text-white" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -19,15 +19,38 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(50,186,104);">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:href="@{/login}">zaloguj</a>
+                            <div sec:authorize ="hasAnyRole('USER','EMPLOYEE','ADMIN')">
+                                <a class="nav-link active" th:href="@{/reservation}">Rezerwacja</a>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:href="@{/users/register}">zarejestruj</a>
+                            <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                                <a class="nav-link active" th:href="@{/adoptions}">Historia adopcji</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div sec:authorize ="hasRole('ADMIN')">
+                                <a class="nav-link active" th:href="@{/users}">zarządzaj użytkownikami</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                                <a class="nav-link active" th:href="@{/manage_animals}">zarządzaj zwierzętami</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div sec:authorize="!isAuthenticated()">
+                                <a class="nav-link active" th:href="@{/login}">zaloguj</a>
+                            </div>
+                            <div sec:authorize="isAuthenticated()">
+                                <a class="nav-link active" th:href="@{/logout}">wyloguj</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div sec:authorize="!isAuthenticated()">
+                                <a class="nav-link active" th:href="@{/users/register}">zarejestruj</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -69,10 +92,10 @@
                         <td style="width: 95px;height: 50px;">[[${reservation.address}]]</td>
                         <td style="width: 148px;">[[${reservation.birthday}]]</td>
                         <td style="width: 187px;">
-                            <button class="btn btn-success text-end" th:href="@{'/reservations/accept/'+${reservation.id.idReservation}
-                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" type="button" style="margin: -1px;">Akceptuj</button>
-                            <button class="btn btn-danger text-end" th:href="@{'/reservations/delete/'+${reservation.id.idReservation}
-                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" type="button" style="margin: 0px;">Usuń</button>
+                            <a class="btn btn-success text-end" th:href="@{'/reservations/accept/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" type="button" style="margin: -1px;">Akceptuj</a>
+                            <a class="btn btn-danger text-end" th:href="@{'/reservations/delete/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" type="button" style="margin: 0px;">Usuń</a>
                         </td>
                     </tr>
                 </th:block>

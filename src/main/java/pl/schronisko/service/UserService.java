@@ -2,6 +2,7 @@ package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.schronisko.exception.EmailAlreadyInDatabaseException;
 import pl.schronisko.exception.UserHasAnimalException;
 import pl.schronisko.exception.UserNotFoundException;
 import pl.schronisko.model.Animal;
@@ -22,6 +23,12 @@ public class UserService {
 
     public List<User> listAll() {
         return (List<User>) userRepository.findAll();
+    }
+    public void register(User user) throws EmailAlreadyInDatabaseException {
+        if(isEmailInDatabase(user.getEmail())) {
+            throw new EmailAlreadyInDatabaseException("Na podany adres e-mail zostal juz zarejestrowany uzytkownik");
+        } else
+        userRepository.save(user);
     }
     public void save(User user) {
         userRepository.save(user);
@@ -57,6 +64,10 @@ public class UserService {
             }
         }
         return false;
+    }
+    public boolean isEmailInDatabase(String email) {
+        User user = userRepository.findByEmail(email);
+        return user != null;
     }
 
 }
