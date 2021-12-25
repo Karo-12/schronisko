@@ -35,10 +35,28 @@ public class UserController {
         return "new_user_form2";
     }
     @PostMapping("/users/save")
-    public String saveUser(User user, RedirectAttributes ra){
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userService.save(user);
+    public String saveUser(User user, RedirectAttributes ra) {
+        try {
+            String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            userService.save(user);
+        }catch(EmailAlreadyInDatabaseException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/users/new";
+        }
+        ra.addFlashAttribute("message","The user has been saved successfully");
+        return "redirect:/users";
+    }
+    @PostMapping("/users/edit_save")
+    public String saveEditUser(User user, RedirectAttributes ra) {
+        try {
+            String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            userService.save(user);
+        }catch(EmailAlreadyInDatabaseException e) {
+            ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/users/edit/" + user.getId();
+        }
         ra.addFlashAttribute("message","The user has been saved successfully");
         return "redirect:/users";
     }
@@ -48,7 +66,7 @@ public class UserController {
             User user = userService.get(id);
             model.addAttribute("user", user);
             model.addAttribute("pageTitle", "Edit User (ID: "+id+")");
-            return "new_user_form2";
+            return "edit_user_form";
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/users";

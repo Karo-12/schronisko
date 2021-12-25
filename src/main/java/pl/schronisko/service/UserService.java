@@ -30,8 +30,13 @@ public class UserService {
         } else
         userRepository.save(user);
     }
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(User user) throws EmailAlreadyInDatabaseException{
+        Optional<User> user2 = userRepository.findById(user.getId());
+        if(user2.isEmpty() && isEmailInDatabase(user.getEmail())){
+            throw new EmailAlreadyInDatabaseException("Na podany adres e-mail zostal juz zarejestrowany uzytkownik");
+        } else if(user2.isPresent() && !Objects.equals(user2.get().getEmail(), user.getEmail()) && isEmailInDatabase(user.getEmail())) {
+            throw new EmailAlreadyInDatabaseException("Na podany adres e-mail zostal juz zarejestrowany uzytkownik");
+        } else userRepository.save(user);
     }
     public User get(Integer id) throws UserNotFoundException {
         Optional<User> result = userRepository.findById(id);
