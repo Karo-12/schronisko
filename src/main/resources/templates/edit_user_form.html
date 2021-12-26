@@ -67,6 +67,9 @@
             <div class="block-heading">
                 <h2 class="text-success">Edytuj użytkownika</h2>
             </div>
+            <div th:if="${message}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
         </div>
         <form th:action="@{/users/edit_save}" method = "post" th:object ="${user}" style="height: 713px;">
             <input type="hidden" th:field="*{id}">
@@ -80,9 +83,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" >Hasło</label>
-                <label>
-                    <input class="form-control" th:field="*{password}" type="password" required minlength="4" maxlength="15">
-                </label>
+                <input class="form-control" th:field="*{password}" type="password" required minlength="4" maxlength="15">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="email">Email</label>
@@ -90,27 +91,21 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" >Adres</label>
-                <label>
-                    <input class="form-control" th:field="*{address}" type="text" required minlength="4" maxlength="45">
-                </label>
+                <input class="form-control" th:field="*{address}" type="text" required minlength="4" maxlength="45">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="email">Rola</label>
-                <label>
-                    <select class="form-select" required th:field="*{role}">
-                        <optgroup label="Wybierz role">
-                            <option value="ROLE_USER" selected="">User</option>
-                            <option value="ROLE_EMPLOYEE">Opiekun</option>
-                            <option value="ROLE_ADMIN">Admin</option>
-                        </optgroup>
-                    </select>
-                </label>
+                <select class="form-select" required th:field="*{role}">
+                    <optgroup label="Wybierz role">
+                        <option value="ROLE_USER" selected="">User</option>
+                        <option value="ROLE_EMPLOYEE">Opiekun</option>
+                        <option value="ROLE_ADMIN">Admin</option>
+                    </optgroup>
+                </select>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="email">Data urodzenia</label>
-                <label>
-                    <input class="form-control" th:field="*{birthday}" type="date">
-                </label>
+                <input class="form-control" th:field="*{birthday}" type="date">
             </div>
             <button class="btn btn-primary" type="submit" style="padding: 5px 12px;margin: 1px;">Edytuj</button>
             <button class="btn btn-primary" onclick="cancelForm()" type="button" style="margin: 15px;padding: 6px 12px;background: rgb(151,154,159);border-width: 0;">Anuluj</button>

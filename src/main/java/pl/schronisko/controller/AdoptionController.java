@@ -44,6 +44,6 @@ public class AdoptionController {
     public String showAdoptionList(Model model){
         List<Adoption> adoptions = adoptionService.listAll();
         model.addAttribute("listOfAdoptions", adoptions);
-        return "adoptions2";
+        return "adoptions";
     }
 }

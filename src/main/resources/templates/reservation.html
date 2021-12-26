@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Schronisko Futrzak | Zarezerwuj</title>
+        <title>Schronisko Futrzak | Rezerwacja</title>
         <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
@@ -22,11 +22,6 @@
                         <li class="nav-item">
                             <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
                                 <a class="nav-link active" th:href="@{/reservations}">Rezerwacje</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div sec:authorize ="hasAnyRole('USER','EMPLOYEE','ADMIN')">
-                                <a class="nav-link active" th:href="@{/reservation}">Rezerwacja</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -61,47 +56,40 @@
                 </div>
             </div>
         </nav>
-        <main class="page registration-page">
-            <section class="clean-block clean-form dark">
+        <main class="page">
+            <section class="clean-block about-us" style="height: 173px;">
                 <div class="container">
                     <div class="block-heading">
-                        <h2 class="text-success">Zarezerwuj zwierzę</h2>
+                        <h2 class="text-success">Złożona rezerwacja</h2>
+                        <p></p>
                     </div>
                 </div>
-                <form th:action="@{'/reservations/save/' + ${idAnimal}}" method = "post" th:object ="${reservation}" style="height: 587px;">
-                    <div class="mb-3">
-                        <label class="form-label" th:field="*{description}">Opis</label>
-                        <textarea class="form-control"></textarea>
-                    </div>
-                    <small>Wypełnij jeżeli zwierzę rezerwowane jest dla kogoś innego</small>
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Imię</label>
-                        <input class="form-control item" th:field="*{name}" type="text" id="name" maxlength="45">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="surname">Nazwisko</label>
-                        <input class="form-control" th:field="*{surname}" type="text" id="surname" maxlength="45">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Adres</label>
-                        <input class="form-control" th:field="*{address}" type="text" maxlength="45">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Data urodzenia</label>
-                        <input class="form-control" th:field="*{birthday}" type="date">
-                    </div>
-                    <button class="btn btn-primary" type="submit" style="padding: 5px 12px;margin: 1px;">Zarezerwuj</button>
-                    <button class="btn btn-primary" onclick="cancelForm()" type="button" style="margin: 15px;padding: 6px 12px;background: rgb(151,154,159);border-width: 0px;">Anuluj</button>
-                </form>
             </section>
         </main>
-        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-        <script src="/assets/js/script.min.js"></script>
-        <script type="text/javascript">
-            function cancelForm(){
-                window.location="[[@{/}]]";
-            }
-        </script>
-    </body>
+        <div class="container" style="transform: scale(0.88);height: 325px;">
+            <div class="row">
+                <div class="col offset-lg-0" style="text-align: left;background: rgba(177,165,165,0.11);color: rgb(0,2,4);border-style: solid;
+                border-top-style: none;border-right-style: none;border-bottom-style: solid;border-bottom-color: rgb(69,200,37);border-left-style: none;
+                box-shadow: 0px 0px 14px;">
+                <div></div>
+                <div class="row">
+                    <div class="col" style="box-shadow: 0px 0px 0px;">
+                        <h2 class="text-start">Zwierze: [[${reservation.id.idAnimal}]], Data: [[${reservation.date}]]</h2>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <a class="btn btn-success th btn-lg text-center" th:href="@{'/reservation/cancel/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" type="button" style="margin: 15px;width: 182.734px;">Anuluj</a>
+                    </div>
+                </div>
+                <p class="text-start" style="background: rgba(255,255,255,0);width: 688px;">[[${reservation.description}]]<br></p>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="/assets/js/script.min.js"></script>
+</body>
 </html>

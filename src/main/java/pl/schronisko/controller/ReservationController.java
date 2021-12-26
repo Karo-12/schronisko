@@ -16,7 +16,7 @@ import pl.schronisko.model.*;
 import pl.schronisko.service.AnimalService;
 import pl.schronisko.service.ReservationService;
 import pl.schronisko.service.UserService;
-import java.time.LocalDate;
+
 import java.util.List;
 
 @Controller
@@ -32,13 +32,13 @@ public class ReservationController {
     public String showReservationList(Model model){
         List<Reservation> reservations = reservationService.listAll();
         model.addAttribute("listOfReservations", reservations);
-        return "reservations2";
+        return "reservations";
     }
     @GetMapping("reservations/new/{idAnimal}")
     public String addNewReservation(@PathVariable Integer idAnimal, Model model) {
         model.addAttribute("reservation", new Reservation());
         model.addAttribute("idAnimal", idAnimal);
-        return "new_reservation_form2";
+        return "new_reservation_form";
     }
     @PostMapping("reservations/save/{idAnimal}")
     public String saveReservation(Reservation reservation, RedirectAttributes ra, @PathVariable Integer idAnimal) {
@@ -60,20 +60,20 @@ public class ReservationController {
                 animal.setStatus("available");
                 animalService.save(animal);
             }
-            ra.addFlashAttribute("message", " The Reservation Id has been deleted.");
+            ra.addFlashAttribute("message", "Rezerwacja została usunięta");
         } catch (ReservationNotFoundException | AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
         return "redirect:/reservations";
     }
     @GetMapping("/reservation")
-    public String showAnimalProfile(Model model, RedirectAttributes ra) {
+    public String showReservation(Model model, RedirectAttributes ra) {
         try {
             MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userService.findUserByEmail(activeUser.getUsername());
             Reservation reservation = reservationService.getReservationByUserId(user.getId());
             model.addAttribute("reservation", reservation);
-            return "reservation2";
+            return "reservation";
         }catch(ReservationNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/";
@@ -87,11 +87,12 @@ public class ReservationController {
             Animal animal = animalService.getAnimalById(idAnimal);
             animal.setStatus("available");
             animalService.save(animal);
-            ra.addFlashAttribute("message", " The Reservation Id has been deleted.");
+            ra.addFlashAttribute("message", "Rezerwacja została anulowana");
         } catch (ReservationNotFoundException | AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/reservation";
         }
-        return "redirect:/";
+        return "redirect:/reservation";
     }
 
 }

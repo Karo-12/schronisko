@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="text-white" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Schronisko Futrzak | Zarządzaj zwierzętami</title>
+        <title>Schronisko Futrzak | Zarezerwuj</title>
         <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
@@ -40,6 +40,11 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                                <a class="nav-link active" th:href="@{/manage_animals}">zarządzaj zwierzętami</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
                             <div sec:authorize="!isAuthenticated()">
                                 <a class="nav-link active" th:href="@{/login}">zaloguj</a>
                             </div>
@@ -56,53 +61,47 @@
                 </div>
             </div>
         </nav>
-        <main class="page">
-            <section class="clean-block about-us" style="height: 183px;">
+        <main class="page registration-page">
+            <section class="clean-block clean-form dark">
                 <div class="container">
                     <div class="block-heading">
-                        <h2 class="text-success">Zarządzaj zwierzętami</h2>
+                        <h2 class="text-success">Zarezerwuj zwierzę</h2>
                     </div>
                 </div>
+                <form th:action="@{'/reservations/save/' + ${idAnimal}}" method = "post" th:object ="${reservation}" style="height: 587px;">
+                    <div class="mb-3">
+                        <label class="form-label" >Opis</label>
+                        <textarea class="form-control" th:field="*{description}"></textarea>
+                    </div>
+                    <small>Wypełnij jeżeli zwierzę rezerwowane jest dla kogoś innego</small>
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Imię</label>
+                        <input class="form-control item" th:field="*{name}" type="text" id="name" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="surname">Nazwisko</label>
+                        <input class="form-control" th:field="*{surname}" type="text" id="surname" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Adres</label>
+                        <input class="form-control" th:field="*{address}" type="text" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Data urodzenia</label>
+                        <input class="form-control" th:field="*{birthday}" type="date">
+                    </div>
+                    <button class="btn btn-primary" type="submit" style="padding: 5px 12px;margin: 1px;">Zarezerwuj</button>
+                    <button class="btn btn-primary" onclick="cancelForm()" type="button" style="margin: 15px;padding: 6px 12px;background: rgb(151,154,159);border-width: 0px;">Anuluj</button>
+                </form>
             </section>
         </main>
-        <div class="table-responsive">
-            <a class="btn btn-outline-success btn-lg" th:href="@{/manage_animals/new}">Dodaj nowe zwierze</a>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Imie</th>
-                        <th>Typ</th>
-                        <th>Rasa</th>
-                        <th>Opiekun</th>
-                        <th>Status</th>
-                        <th>Wiek</th>
-                        <th>Płeć</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="animal : ${listAnimals}">
-                    <tr>
-                        <td>[[${animal.id}]]</td>
-                        <td>[[${animal.name}]]</td>
-                        <td>[[${animal.idRace.idType.name}]]</td>
-                        <td>[[${animal.idRace.name}]]</td>
-                        <td>[[${animal.idUser.email}]]</td>
-                        <td>[[${animal.status}]]</td>
-                        <td>[[${animal.age}]]</td>
-                        <td>[[${animal.gender}]]</td>
-                        <td>
-                            <a class="btn btn-success text-end" th:href="@{'/manage_animals/edit/'+${animal.id}}" type="button" style="margin: -1px;">Edytuj</a>
-                            <a class="btn btn-danger text-end" th:href="@{'/manage_animals/delete/'+${animal.id}}" type="button" style="margin: 0px;">Usuń</a>
-                        </td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </div>
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
         <script src="/assets/js/script.min.js"></script>
+        <script type="text/javascript">
+            function cancelForm(){
+                window.location="[[@{/}]]";
+            }
+        </script>
     </body>
 </html>

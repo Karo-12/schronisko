@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Schronisko Futrzak | Dodaj nowego użytkownika</title>
+        <title>Schronisko Futrzak | Nowe</title>
         <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i}">
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css}">
@@ -65,57 +65,87 @@
             <section class="clean-block clean-form dark">
                 <div class="container">
                     <div class="block-heading">
-                        <h2 class="text-success">Dodaj nowego użytkownika</h2>
+                        <h2 class="text-success">Dodaj nowe zwierzę</h2>
+                    </div>
+                    <div th:if="${message}" class="alert alert-success text-center">
+                        [[${message}]]
                     </div>
                 </div>
-                <form th:action="@{/users/save}" method = "post" th:object ="${user}" style="height: 713px;">
+                <form th:action="@{/manage_animals/save}" method = "post" th:object ="${animal}" style="height: 1007px;">
                     <input type="hidden" th:field="*{id}">
                     <div class="mb-3">
                         <label class="form-label" for="name">Imię</label>
-                        <input class="form-control item" th:field="*{name}" type="text" id="name" required minlength="2" maxlength="15">
+                        <input class="form-control item" type="text" th:field="*{name}" id="name" required minlength="2" maxlength="45">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="surname">Nazwisko</label>
-                        <input class="form-control item" th:field="*{surname}" type="text" id="surname" required minlength="2" maxlength="20">
+                        <label class="form-label" for="age">Wiek</label>
+                        <input class="form-control item" th:field="*{age}" type="number" id="age" required minlength="2" maxlength="45">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" >Hasło</label>
-                        <input class="form-control" th:field="*{password}" type="password" required minlength="4" maxlength="15">
+                        <label class="form-label" for="date">Data przyjęcia</label>
+                        <input class="form-control" th:field="*{arrivalDate}" type="date" id="date">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="email">Email</label>
-                        <input class="form-control item" th:field="*{email}" type="email" id="email" required minlength="8" maxlength="45">
+                        <label class="form-label" for="cageNumber">Numer klatki</label>
+                        <input class="form-control item" th:field="*{cageNumber}" type="number" id="cageNumber" required minlength="4" maxlength="45">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" >Adres</label>
-                        <input class="form-control" th:field="*{address}" type="text" required minlength="4" maxlength="45">
+                        <label class="form-label" for="type">Typ</label>
+                        <input class="form-control" th:name="type" th:value="*{idRace?.idType?.name}" type="text" id="type" required minlength="3" maxlength="45">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="email">Rola</label>
-                        <select class="form-select" required th:field="*{role}">
-                            <optgroup label="Wybierz role">
-                                <option value="ROLE_USER" selected="">User</option>
-                                <option value="ROLE_EMPLOYEE">Opiekun</option>
-                                <option value="ROLE_ADMIN">Admin</option>
+                        <label class="form-label" for="race">Rasa</label>
+                        <input class="form-control" th:name="race" th:value="*{idRace?.name}" type="text" id="race" required minlength="3" maxlength="45">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Opis</label>
+                        <textarea class="form-control" th:field="*{description}" id="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" >Płeć</label>
+                        <div class="form-check">
+                            <input class="form-check-input" th:field="*{gender}" th:value="male" type="radio" id="formCheck-1" required>
+                            <label class="form-check-label" for="formCheck-1">male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" th:field="*{gender}" th:value="female" type="radio" id="formCheck-2">
+                            <label class="form-check-label" for="formCheck-2">female</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" th:field="*{status}">
+                            <optgroup label="Wybierz status">
+                                <option th:value="available"  th:name = "status" >Dostępny</option>
+                                <option th:value="reserved"  th:name = "status" >Zarezerwowany</option>
+                                <option th:value="adopted" th:name = "status" >zaadoptowany</option>
                             </optgroup>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="email">Data urodzenia</label>
-                        <input class="form-control" th:field="*{birthday}" type="date">
+                        <label class="form-label" >Opiekun</label>
+                        <select class="form-select" th:field="*{idUser.id}" required>
+                            <optgroup label="Wybierz status">
+                                <option th:each="user : ${users}"
+                                        th:value="${user.id}"
+                                        th:text="${user.email}">
+                                </option>
+                            </optgroup>
+                        </select>
                     </div>
                     <button class="btn btn-primary" type="submit" style="padding: 5px 12px;margin: 1px;">Dodaj</button>
-                    <button class="btn btn-primary" onclick="cancelForm()" type="button" style="margin: 15px;padding: 6px 12px;background: rgb(151,154,159);border-width: 0px;">Anuluj</button>
-                </form>
-            </section>
-        </main>
-        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-        <script src="/assets/js/script.min.js"></script>
-        <script type="text/javascript">
-            function cancelForm(){
-                window.location="[[@{/users}]]";
-            }
-        </script>
-    </body>
-</html>
+                    <button class="btn btn-secondary m-2" type="button" style="margin: 15px;padding: 6px 12px;
+                    background: rgb(151,154,159);border-width: 0px;" onclick="cancelForm()">Anuluj</button>
+                    </form>
+                </section>
+            </main>
+            <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+            <script src="/assets/js/script.min.js"></script>
+            <script type="text/javascript">
+                function cancelForm(){
+                    window.location="[[@{/manage_animals}]]";
+                }
+            </script>
+        </body>
+    </html>

@@ -65,6 +65,9 @@
                         <h2 class="text-success">Zaloguj się</h2>
                         <p></p>
                     </div>
+                    <div th:if="${param.error}" class="alert alert-danger text-center">
+                        Nieprawidłowy e-mail lub hasło
+                    </div>
                     <form th:action="@{/login}" method="post" style="max-width: 500px; margin:0 auto; " >
                         <div class="mb-3">
                             <label class="form-label" for="username">Email</label>

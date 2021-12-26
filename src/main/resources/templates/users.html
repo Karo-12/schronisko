@@ -57,8 +57,12 @@
             <main class="page">
                 <section class="clean-block about-us" style="height: 185px;">
                     <div class="container">
+
                         <div class="block-heading">
                             <h2 class="text-success">Zarządzaj użytkownikami</h2>
+                            <div th:if="${message}" class="alert alert-success text-center">
+                                [[${message}]]
+                            </div>
                         </div>
                     </div>
                 </section>

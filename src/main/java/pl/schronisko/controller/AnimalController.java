@@ -15,7 +15,6 @@ import pl.schronisko.model.Race;
 import pl.schronisko.model.User;
 import pl.schronisko.service.AnimalService;
 import pl.schronisko.service.RaceService;
-import pl.schronisko.service.TypeService;
 import pl.schronisko.service.UserService;
 
 import java.util.List;
@@ -35,14 +34,14 @@ public class AnimalController {
     public String showAnimalList(Model model){
         List<Animal> animals = animalService.listAll();
         model.addAttribute("listAnimals", animals);
-        return "animals2";
+        return "animals";
     }
     @GetMapping("/profile/{id}")
     public String showAnimalProfile(@PathVariable String id, Model model, RedirectAttributes ra) {
         try {
             Animal animal = animalService.getAnimalById(Integer.parseInt(id));
             model.addAttribute("animalProfile", animal);
-            return "profile2";
+            return "profile";
 
         }catch(AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
@@ -53,7 +52,7 @@ public class AnimalController {
     public String showAnimalsListManage(Model model) {
         List<Animal> animals = animalService.listAll();
         model.addAttribute("listAnimals", animals);
-        return "manage_animals2";
+        return "manage_animals";
     }
     @GetMapping("manage_animals/new")
     public String addNewUser(Model model) {
@@ -62,14 +61,14 @@ public class AnimalController {
         model.addAttribute("animal", new Animal());
         model.addAttribute("races", races);
         model.addAttribute("users", users);
-        return "new_animal_form2";
+        return "new_animal_form";
     }
     @PostMapping("/manage_animals/save")
     public String saveAnimal(Animal animal, RedirectAttributes ra, @RequestParam("type") String type, @RequestParam("race") String race) {
         Race r = raceService.getRace(type,race);
         animal.setIdRace(r);
         animalService.save(animal);
-        ra.addFlashAttribute("message","The user has been saved successfully");
+        ra.addFlashAttribute("message","Użytkownik został dodany");
         return "redirect:/manage_animals";
     }
     @GetMapping("/manage_animals/edit/{id}")
@@ -81,17 +80,17 @@ public class AnimalController {
             model.addAttribute("animal", animal);
             model.addAttribute("races", races);
             model.addAttribute("users", users);
-            return "new_animal_form2";
+            return "new_animal_form";
         } catch (AnimalNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/users";
         }
     }
     @GetMapping("/manage_animals/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra) {
+    public String deleteAnimal(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             animalService.delete(id);
-            ra.addFlashAttribute("message", " The user ID: "+id+" has been deleted.");
+            ra.addFlashAttribute("message", "Zwierzę zostało usunięte");
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }

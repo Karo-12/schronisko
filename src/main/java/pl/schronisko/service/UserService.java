@@ -30,11 +30,14 @@ public class UserService {
         } else
         userRepository.save(user);
     }
-    public void save(User user) throws EmailAlreadyInDatabaseException{
+    public void saveEdit(User user) throws EmailAlreadyInDatabaseException{
         Optional<User> user2 = userRepository.findById(user.getId());
-        if(user2.isEmpty() && isEmailInDatabase(user.getEmail())){
+         if(!Objects.equals(user2.get().getEmail(), user.getEmail()) && isEmailInDatabase(user.getEmail())) {
             throw new EmailAlreadyInDatabaseException("Na podany adres e-mail zostal juz zarejestrowany uzytkownik");
-        } else if(user2.isPresent() && !Objects.equals(user2.get().getEmail(), user.getEmail()) && isEmailInDatabase(user.getEmail())) {
+        } else userRepository.save(user);
+    }
+    public void save(User user) throws EmailAlreadyInDatabaseException {
+        if(isEmailInDatabase(user.getEmail())){
             throw new EmailAlreadyInDatabaseException("Na podany adres e-mail zostal juz zarejestrowany uzytkownik");
         } else userRepository.save(user);
     }
@@ -48,10 +51,9 @@ public class UserService {
         if(count == null || count == 0) {
             throw new UserNotFoundException("Could not find any user with ID: "+id);
         }
-        if(hasUserAnyAnimal(id)) {
-            throw new UserHasAnimalException("User with ID: "+ id + "has animal.");
-        }
-        userRepository.deleteById(id);
+        else if(hasUserAnyAnimal(id)) {
+            throw new UserHasAnimalException("Użytkownik już posiada zwierze");
+        } else userRepository.deleteById(id);
     }
     public List<User> listEmployees() {
         return userRepository.findByRoleIs("ROLE_EMPLOYEE");

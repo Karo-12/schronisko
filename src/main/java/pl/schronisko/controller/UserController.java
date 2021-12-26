@@ -27,12 +27,12 @@ public class UserController {
     public String showUserList(Model model) {
         List<User> users = userService.listAll();
         model.addAttribute("listOfUsers", users);
-        return "users2";
+        return "users";
     }
     @GetMapping("users/new")
     public String addNewUser(Model model) {
         model.addAttribute("user", new User());
-        return "new_user_form2";
+        return "new_user_form";
     }
     @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes ra) {
@@ -52,7 +52,7 @@ public class UserController {
         try {
             String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
-            userService.save(user);
+            userService.saveEdit(user);
         }catch(EmailAlreadyInDatabaseException e) {
             ra.addFlashAttribute("message",e.getMessage());
             return "redirect:/users/edit/" + user.getId();
@@ -79,13 +79,14 @@ public class UserController {
             ra.addFlashAttribute("message", " The user ID: "+id+" has been deleted.");
         } catch (UserNotFoundException | UserHasAnimalException e) {
             ra.addFlashAttribute("message",e.getMessage());
+            return "redirect:/users";
         }
         return "redirect:/users";
     }
     @GetMapping("users/register")
     public String registerUser(Model model) {
         model.addAttribute("user", new User());
-        return "registration2";
+        return "registration";
     }
     @PostMapping("/users/save_register")
     public String registerUserSave(User user, RedirectAttributes ra){
