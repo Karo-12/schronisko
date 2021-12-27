@@ -19,31 +19,31 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(50,186,104);">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                        <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                            <li class="nav-item">
                                 <a class="nav-link active" th:href="@{/reservations}">Rezerwacje</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div sec:authorize ="hasAnyRole('USER','EMPLOYEE','ADMIN')">
+                            </li>
+                        </div>
+                        <div sec:authorize ="hasAnyRole('USER','EMPLOYEE','ADMIN')">
+                            <li class="nav-item">
                                 <a class="nav-link active" th:href="@{/reservation}">Rezerwacja</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
-                                <a class="nav-link active" th:href="@{/adoptions}">Historia adopcji</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div sec:authorize ="hasRole('ADMIN')">
-                                <a class="nav-link active" th:href="@{/users}">zarządzaj użytkownikami</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
-                                <a class="nav-link active" th:href="@{/manage_animals}">zarządzaj zwierzętami</a>
-                            </div>
-                        </li>
+                            </li>
+                        </div>
+                        <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/adoptions}">adopcje</a>
+                            </li>
+                        </div>
+                        <div sec:authorize ="hasRole('ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/users}">użytkownicy</a>
+                            </li>
+                        </div>
+                        <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/manage_animals}">zwierzęta</a>
+                            </li>
+                        </div>
                         <li class="nav-item">
                             <div sec:authorize="!isAuthenticated()">
                                 <a class="nav-link active" th:href="@{/login}">zaloguj</a>
@@ -52,11 +52,11 @@
                                 <a class="nav-link active" th:href="@{/logout}">wyloguj</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <div sec:authorize="!isAuthenticated()">
+                        <div sec:authorize="!isAuthenticated()">
+                            <li class="nav-item">
                                 <a class="nav-link active" th:href="@{/users/register}">zarejestruj</a>
-                            </div>
-                        </li>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </div>
