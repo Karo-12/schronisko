@@ -32,7 +32,7 @@ public class AnimalController {
 
     @GetMapping("/animals")
     public String showAnimalList(Model model){
-        List<Animal> animals = animalService.listAll();
+        List<Animal> animals = animalService.listAvailableAnimals();
         model.addAttribute("listAnimals", animals);
         return "animals";
     }

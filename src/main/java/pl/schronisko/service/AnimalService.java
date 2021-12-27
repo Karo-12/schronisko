@@ -20,7 +20,9 @@ public class AnimalService {
     public List<Animal> listAll() {
         return (List<Animal>) animalRepository.findAll();
     }
-
+    public List<Animal> listAvailableAnimals() {
+        return animalRepository.findByStatusIs("available");
+    }
     public Animal getAnimalById (Integer id) throws AnimalNotFoundException {
         Optional<Animal> result = animalRepository.findById(id);
         if (result.isPresent()) return result.get();

@@ -40,6 +40,9 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/animals}">zwierzeta</a>
+                        </li>
+                        <li class="nav-item">
                             <div sec:authorize ="hasAnyRole('EMPLOYEE','ADMIN')">
                                 <a class="nav-link active" th:href="@{/manage_animals}">zarządzaj zwierzętami</a>
                             </div>
