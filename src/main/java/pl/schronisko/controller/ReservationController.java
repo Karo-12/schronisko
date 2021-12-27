@@ -72,6 +72,12 @@ public class ReservationController {
             MyUserDetails activeUser =  (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userService.findUserByEmail(activeUser.getUsername());
             Reservation reservation = reservationService.getReservationByUserId(user.getId());
+            try {
+                Animal animal = animalService.getAnimalById(reservation.getId().getIdAnimal());
+                model.addAttribute("animal", animal);
+            }catch(AnimalNotFoundException e) {
+                ra.addFlashAttribute("message",e.getMessage());
+            }
             model.addAttribute("reservation", reservation);
             return "reservation";
         }catch(ReservationNotFoundException e) {

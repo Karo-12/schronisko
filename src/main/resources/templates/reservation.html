@@ -69,25 +69,22 @@
                 </div>
             </section>
         </main>
-        <div class="container" style="transform: scale(0.88);height: 325px;">
-            <div class="row">
-                <div class="col offset-lg-0" style="text-align: left;background: rgba(177,165,165,0.11);color: rgb(0,2,4);border-style: solid;
-                border-top-style: none;border-right-style: none;border-bottom-style: solid;border-bottom-color: rgb(69,200,37);border-left-style: none;
-                box-shadow: 0px 0px 14px;">
-                <div></div>
-                <div class="row">
-                    <div class="col" style="box-shadow: 0px 0px 0px;">
-                        <h2 class="text-start">Zwierze: [[${reservation.id.idAnimal}]], Data: [[${reservation.date}]]</h2>
-                    </div>
-                    <div class="col"></div>
-                    <div class="col"></div>
-                    <div class="col">
-                        <a class="btn btn-success th btn-lg text-center" th:href="@{'/reservation/cancel/'+${reservation.id.idReservation}
-                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" type="button" style="margin: 15px;width: 182.734px;">Anuluj</a>
-                    </div>
-                </div>
-                <p class="text-start" style="background: rgba(255,255,255,0);width: 688px;">[[${reservation.description}]]<br></p>
-                <div></div>
+        <div class="card border-secondary shadow-lg d-flex float-start d-xxl-flex flex-fill justify-content-md-center align-items-md-start justify-content-xxl-center"
+             style="transform: perspective(110px) translate(450px) scale(0.88);width: 857px;height: 500px;text-align: left;">
+            <div class="card-body" style="transform: perspective(0px) translate(36px) scale(0.99);">
+                <h4 class="card-title">Data: [[${reservation.date}]]</h4>
+                <p>Imie: [[${reservation.name}]]</p>
+                <p>Nazwisko: [[${reservation.surname}]]</p>
+                <p>Adres: [[${reservation.address}]]</p>
+                <p>Opis: [[${reservation.description}]]</p>
+                <p>Imie zwierzęcia: [[${animal.name}]]</p>
+                <p>Opis zwierzęcia: [[${animal.description}]]</p>
+                <p>Opiekun: [[${animal.idUser.email}]] </p>
+                <h6 class="text-muted card-subtitle mb-2"></h6>
+                <a class="card-link text-center" th:href="@{'/reservation/cancel/'+${reservation.id.idReservation}
+                    +'/'+${reservation.id.idAnimal}+'/'+${reservation.id.idUser}}" style="transform: translate(-1000px);text-align: center;">Anuluj rezerwacje</a>
+            </div>
+        </div>         <div></div>
             </div>
         </div>
     </div>
