@@ -86,7 +86,9 @@
                 <p>Opis: [[${animalProfile.description}]]</p>
                 <p>Opiekun: [[${animalProfile.idUser.email}]]</p>
                 <h6 class="text-muted card-subtitle mb-2"></h6>
-                <a class="card-link text-center" th:href="@{'/reservations/new/'+${animalProfile.id}}" style="transform: translate(-1000px);text-align: center;">Zarezerwuj</a>
+                <div sec:authorize="isAuthenticated()">
+                     <a class="card-link text-center" th:href="@{'/reservations/new/'+${animalProfile.id}}" style="transform: translate(-1000px);text-align: center;">Zarezerwuj</a>
+                </div>
             </div>
         </div>
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
