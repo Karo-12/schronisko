@@ -1,6 +1,9 @@
 package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.schronisko.exception.AnimalNotAvailableException;
@@ -79,5 +82,9 @@ public class ReservationService {
             }
         }
         return false;
+    }
+    public Page<Reservation> findPaginatedAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return reservationRepository.findAll(pageable);
     }
 }

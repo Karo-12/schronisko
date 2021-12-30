@@ -1,6 +1,7 @@
 package pl.schronisko.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +43,18 @@ public class AdoptionController {
     }
     @GetMapping("/adoptions")
     public String showAdoptionList(Model model){
-        List<Adoption> adoptions = adoptionService.listAll();
-        model.addAttribute("listOfAdoptions", adoptions);
+        return findPaginatedAdoptions(1, model);
+    }
+    @GetMapping("/adoptions/{adoptionsPageNo}")
+    public String findPaginatedAdoptions(@PathVariable(value = "adoptionsPageNo") int adoptionsPageNo, Model model) {
+        int pageSize = 6;
+        Page<Adoption> page = adoptionService.findPaginatedAll(adoptionsPageNo, pageSize);
+        List <Adoption> listOfAdoptions= page.getContent();
+
+        model.addAttribute("currentPage", adoptionsPageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listOfAdoptions", listOfAdoptions);
         return "adoptions";
     }
 }

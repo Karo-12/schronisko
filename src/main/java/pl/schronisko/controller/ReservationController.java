@@ -1,6 +1,7 @@
 package pl.schronisko.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +31,18 @@ public class ReservationController {
 
     @GetMapping("/reservations")
     public String showReservationList(Model model){
-        List<Reservation> reservations = reservationService.listAll();
-        model.addAttribute("listOfReservations", reservations);
+        return findPaginatedReservations(1, model);
+    }
+    @GetMapping("/reservations/{reservationPageNo}")
+    public String findPaginatedReservations(@PathVariable(value = "reservationPageNo") int reservationPageNo, Model model) {
+        int pageSize = 5;
+        Page<Reservation> page = reservationService.findPaginatedAll(reservationPageNo, pageSize);
+        List <Reservation> listOfReservations= page.getContent();
+
+        model.addAttribute("currentPage", reservationPageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listOfReservations", listOfReservations);
         return "reservations";
     }
     @GetMapping("reservations/new/{idAnimal}")
