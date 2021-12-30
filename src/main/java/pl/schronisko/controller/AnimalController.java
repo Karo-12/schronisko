@@ -1,6 +1,7 @@
 package pl.schronisko.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +33,22 @@ public class AnimalController {
 
     @GetMapping("/animals")
     public String showAnimalList(Model model){
-        List<Animal> animals = animalService.listAvailableAnimals();
-        model.addAttribute("listAnimals", animals);
+        return findPaginatedAnimals(1, model);
+    }
+    @GetMapping("/animals/{animalsPageNo}")
+    public String findPaginatedAnimals(@PathVariable(value = "animalsPageNo") int animalsPageNo, Model model) {
+        int pageSize = 4;
+
+        Page< Animal > page = animalService.findPaginatedByStatus(animalsPageNo, pageSize);
+        List <Animal> listAnimals = page.getContent();
+
+        model.addAttribute("currentPage", animalsPageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listAnimals", listAnimals);
         return "animals";
     }
+
     @GetMapping("/profile/{id}")
     public String showAnimalProfile(@PathVariable String id, Model model, RedirectAttributes ra) {
         try {
@@ -50,8 +63,18 @@ public class AnimalController {
     }
     @GetMapping("/manage_animals")
     public String showAnimalsListManage(Model model) {
-        List<Animal> animals = animalService.listAll();
-        model.addAttribute("listAnimals", animals);
+        return findPaginatedManageAnimals(1, model);
+    }
+    @GetMapping("/manage_animals/{animalsPageNo}")
+    public String findPaginatedManageAnimals(@PathVariable(value = "animalsPageNo") int animalsPageNo, Model model) {
+        int pageSize = 10;
+        Page< Animal > page = animalService.findPaginatedAll(animalsPageNo, pageSize);
+        List <Animal> listAnimals = page.getContent();
+
+        model.addAttribute("currentPage", animalsPageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listAnimals", listAnimals);
         return "manage_animals";
     }
     @GetMapping("manage_animals/new")

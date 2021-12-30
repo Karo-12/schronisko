@@ -1,6 +1,9 @@
 package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.schronisko.exception.AnimalNotFoundException;
 import pl.schronisko.exception.UserNotFoundException;
@@ -59,5 +62,13 @@ public class AnimalService {
         }
         assert result != null;
         return result.getStatus().equals("adopted");
+    }
+    public Page<Animal> findPaginatedByStatus(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.animalRepository.findByStatusIs("available", pageable);
+    }
+    public Page<Animal> findPaginatedAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.animalRepository.findAll(pageable);
     }
 }
