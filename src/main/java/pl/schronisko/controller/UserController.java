@@ -1,5 +1,6 @@
 package pl.schronisko.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.schronisko.exception.EmailAlreadyInDatabaseException;
 import pl.schronisko.exception.UserHasAnimalException;
 import pl.schronisko.exception.UserNotFoundException;
+import pl.schronisko.model.Animal;
 import pl.schronisko.model.User;
 import pl.schronisko.service.UserService;
 
@@ -25,8 +27,18 @@ public class UserController {
 
     @GetMapping("/users")
     public String showUserList(Model model) {
-        List<User> users = userService.listAll();
-        model.addAttribute("listOfUsers", users);
+        return findPaginatedUsers(1, model);
+    }
+    @GetMapping("/users/{usersPageNo}")
+    public String findPaginatedUsers(@PathVariable(value = "usersPageNo") int usersPageNo, Model model) {
+        int pageSize = 10;
+        Page<User> page = userService.findPaginatedAll(usersPageNo, pageSize);
+        List <User> listOfUsers= page.getContent();
+
+        model.addAttribute("currentPage", usersPageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listOfUsers", listOfUsers);
         return "users";
     }
     @GetMapping("users/new")

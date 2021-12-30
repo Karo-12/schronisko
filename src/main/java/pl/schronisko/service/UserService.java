@@ -1,6 +1,9 @@
 package pl.schronisko.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.schronisko.exception.EmailAlreadyInDatabaseException;
 import pl.schronisko.exception.UserHasAnimalException;
@@ -75,6 +78,10 @@ public class UserService {
     public boolean isEmailInDatabase(String email) {
         User user = userRepository.findByEmail(email);
         return user != null;
+    }
+    public Page<User> findPaginatedAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return userRepository.findAll(pageable);
     }
 
 }
